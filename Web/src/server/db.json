@@ -1,0 +1,209 @@
+{
+  "products": [
+    {
+      "id": "9f55f799-3be3-4676-b27f-3294201dfe81",
+      "name": "Java 6 | Spring Boot - ASM Final: Chức năng giỏ hàng",
+      "chanelName": "Thầy Lộc",
+      "view": 0,
+      "like": 0,
+      "createDate": "2023-11-04T12:57:00.106Z",
+      "student": "Trần Trung Thịnh",
+      "censor": "Nguyễn Thanh Phước",
+      "major": "Ứng dụng phần mềm",
+      "status": "PENDING",
+      "isPublish": 1,
+      "techs": [
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132a",
+          "name": "Java"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132b",
+          "name": "Spring Boot"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132c",
+          "name": "JPA/Hibernate"
+        }
+      ],
+      "videoPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/videosDemo%2F369da955-ce3b-4d9c-bc41-441d89770b60?alt=media&token=c3de5339-917e-4276-9d0d-a46637960e97",
+      "thumbnailPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/thumbnailsDemo%2F855801e7-8efc-4d72-9894-9309a3028f6f?alt=media&token=29322c33-013a-4824-9daf-e0057f323cb0",
+      "sourcePath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/sourcesDemo%2F0cfccee7-5759-4691-b6cf-51596a282a39_demo.zip?alt=media&token=aa2df994-c9f4-4e24-b151-1522bc64a280"
+    },
+    {
+      "id": "b1340815-58c6-4a4d-a4d9-fb381a33b1e9",
+      "name": "Java 6 | Spring Boot - ASM Final: Chức năng giỏ hàng",
+      "chanelName": "Thầy Lộc",
+      "view": 0,
+      "like": 0,
+      "createDate": "2023-11-04T12:59:28.355Z",
+      "student": "Trần Trung Thịnh",
+      "censor": "Lê Anh Tú",
+      "major": "Ứng dụng phần mềm",
+      "status": "DENIED",
+      "isPublish": 1,
+      "techs": [
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132a",
+          "name": "Java"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132b",
+          "name": "Spring Boot"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132c",
+          "name": "JPA/Hibernate"
+        }
+      ],
+      "videoPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/videosDemo%2Ffc56d698-2991-4a62-8c72-d7034522301e?alt=media&token=850296c7-bc10-4090-b4c4-d62843778fc6",
+      "thumbnailPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/thumbnailsDemo%2F41d599cb-5a20-4344-8baa-5da20bc35910?alt=media&token=156e80dd-0029-407c-b34b-df27ebec7683",
+      "sourcePath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/sourcesDemo%2F66e936e6-7217-4a93-91e5-a80a8be34cfd_demo.zip?alt=media&token=15054ff4-00f6-40c5-b9a3-c3ca6963afce"
+    },
+    {
+      "id": "82d04985-2c95-4ec8-a5b2-791d5c86584a",
+      "name": "Java 6 | Spring Boot - ASM Final: Chức năng giỏ hàng",
+      "chanelName": "Thầy Lộc",
+      "view": 15,
+      "like": 0,
+      "createDate": "2023-11-04T13:05:56.773Z",
+      "student": "Trần Trung Thịnh",
+      "censor": "Thân Hoàng Lộc",
+      "major": "Ứng dụng phần mềm",
+      "status": "ACTIVE",
+      "isPublish": 1,
+      "techs": [
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132a",
+          "name": "Java"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132b",
+          "name": "Spring Boot"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132c",
+          "name": "JPA/Hibernate"
+        }
+      ],
+      "videoPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/videosDemo%2Fc8ac15a9-bdcc-42b7-ab72-d557f99d5502?alt=media&token=b6ad6961-822e-4445-b7d1-d99708465a49",
+      "thumbnailPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/thumbnailsDemo%2Fc148d843-9a72-4c8f-aa5a-bac68d400cc0?alt=media&token=9b1d6b75-00b5-4540-b997-ab669f7ca193",
+      "sourcePath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/sourcesDemo%2Fb731eed0-3375-40b9-bc97-d5f91282ad6e_demo.zip?alt=media&token=541f1af5-50fb-47b9-a2d0-ea15f34e586a"
+    },
+    {
+      "id": "c61af83c-cea5-4a64-81e1-3209df75a84a",
+      "name": "Java 6 | Spring Boot - ASM Final: Chức năng giỏ hàng",
+      "chanelName": "Thầy Lộc",
+      "view": 0,
+      "like": 0,
+      "createDate": "2023-11-04T13:46:03.782Z",
+      "student": "Trần Trung Thịnh",
+      "censor": "Nguyễn Thanh Phước",
+      "major": "Ứng dụng phần mềm",
+      "status": "PENDING",
+      "isPublish": 1,
+      "github": "https://github.com/nxd2608/FTUBE.git",
+      "techs": [
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132a",
+          "name": "Java"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132b",
+          "name": "Spring Boot"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132c",
+          "name": "JPA/Hibernate"
+        }
+      ],
+      "videoPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/videosDemo%2F0be152d4-419e-4bb1-91b5-115fc1738413?alt=media&token=9ab4e714-0e9a-47bd-95a4-53da295cb410",
+      "thumbnailPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/thumbnailsDemo%2Fd7801abe-33e5-4177-ae54-23f12d7b0e70?alt=media&token=1f885b52-e98b-4f48-a5f0-d415c5754b37",
+      "sourcePath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/sourcesDemo%2F4ba14152-27fb-443f-aff2-2dfe7c26f81c_demo.zip?alt=media&token=f0540da4-ee48-413b-bd91-dd710a01d4e7"
+    },
+    {
+      "id": "4164a64a-4b77-49f5-8135-bf6fe86848fd",
+      "name": "Java 6 | Spring Boot - ASM Final: Chức năng giỏ hàng",
+      "chanelName": "Thầy Lộc",
+      "view": 0,
+      "like": 0,
+      "createDate": "2023-11-04T14:10:47.802Z",
+      "student": "Hà Phương Như",
+      "censor": "Thân Hoàng Lộc",
+      "major": "Thiết kế website",
+      "status": "PENDING",
+      "isPublish": 1,
+      "github": "https://github.com/nxd2608/FTUBE.git",
+      "techs": [
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132a",
+          "name": "Java"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132b",
+          "name": "Spring Boot"
+        },
+        {
+          "id": "9f6792bf-8fab-4377-9f83-d3964179132c",
+          "name": "JPA/Hibernate"
+        }
+      ],
+      "videoPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/videosDemo%2F650c08d8-00b0-4600-8367-6b2744014f06?alt=media&token=f3d96a34-5334-4a3d-a872-951625f2c031",
+      "thumbnailPath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/thumbnailsDemo%2F53dddd9f-1e8c-410d-9f50-4a23502200d8?alt=media&token=2dd70c22-99e7-4cbe-8f9b-17566f57a4b1",
+      "sourcePath": "https://firebasestorage.googleapis.com/v0/b/fvideos-3163f.appspot.com/o/sourcesDemo%2F017f14a6-7ec0-49aa-9b56-284dd96141cb_demo.zip?alt=media&token=9aa9fbda-c078-454b-9d4d-5831f5f9e7bd"
+    }
+  ],
+  "feedbacks": [
+    {
+      "id": "4fa60b57-2e42-494b-a56c-9e73f1719aab",
+      "censor": "Nguyễn Thanh Phước",
+      "major": "Ứng dụng phần mềm",
+      "content": "Bài làm quá sơ xài, video không đúng mô tả của dự án",
+      "product_id": "b1340815-58c6-4a4d-a4d9-fb381a33b1e9"
+    }
+  ],
+  "techs": [
+    {
+      "id": "9f6792bf-8fab-4377-9f83-d3964179132a",
+      "name": "Java"
+    },
+    {
+      "id": "9f6792bf-8fab-4377-9f83-d3964179132b",
+      "name": "Spring Boot"
+    },
+    {
+      "id": "9f6792bf-8fab-4377-9f83-d3964179132c",
+      "name": "JPA/Hibernate"
+    },
+    {
+      "id": "9f6792bf-8fab-4377-9f83-d3964179132d",
+      "name": "JavaScript"
+    },
+    {
+      "id": "9f6792bf-8fab-4377-9f83-d3964179132e",
+      "name": "SQL"
+    },
+    {
+      "id": "9f6792bf-8fab-4377-9f83-d3964179132f",
+      "name": "Bootstrap"
+    },
+    {
+      "id": "9f6792bf-8fab-4377-9f83-d3964179132g",
+      "name": "Thymeleaf"
+    },
+    {
+      "id": "9f6792bf-8fab-4377-9f83-d3964179132h",
+      "name": "Angular"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "076959a6-144f-4de3-965f-d096dcf3dfb3",
+      "sender": "Nguyễn Thanh Phước",
+      "image": "https://plus.unsplash.com/premium_photo-1675865396004-c7b86406affe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1925&q=80",
+      "createDate": "2023-11-04T12:57:00.106Z",
+      "student": "Trần Trung Thịnh",
+      "content": "Dự án của bạn đã được phê duyệt"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(150deg, #5edfff, #7efff4);
+  border-radius: 10px;
+}
