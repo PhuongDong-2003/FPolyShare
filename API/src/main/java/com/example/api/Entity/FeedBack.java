@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "Feedback")
 public class FeedBack {
-//update
+//update entity
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
