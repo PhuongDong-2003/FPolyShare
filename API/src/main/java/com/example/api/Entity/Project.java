@@ -36,6 +36,9 @@ public class Project {
     @Column(name = "sourcePath")
     private String sourcePath;
 
+    @Column(name = "thumnail")
+    private String thumnail;
+
     @OneToOne(mappedBy = "projectds",cascade = CascadeType.ALL)
     private Description description;
 
