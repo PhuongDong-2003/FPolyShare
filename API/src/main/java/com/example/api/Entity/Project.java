@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Table(name = "Projects")
+@Table(name = "Project")
 public class Project {
 
     @Id
@@ -36,22 +36,24 @@ public class Project {
     @Column(name = "sourcePath")
     private String sourcePath;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "description_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "projectds",cascade = CascadeType.ALL)
     private Description description;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "feedback_id", referencedColumnName = "id")
-    private Feedback feedback;
+    @OneToOne(mappedBy = "projectfb",cascade = CascadeType.ALL)
+    private FeedBack feedback;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "student_id")
+    private User userst;
 
-    @OneToMany(mappedBy = "projects")
+    @ManyToOne
+    @JoinColumn(name = "censor_id")
+    private User usercs;
+
+    @OneToMany(mappedBy = "project")
     private List<Specialization_Project> specialization_project;
 
 
-    @OneToMany(mappedBy = "projects")
+    @OneToMany(mappedBy = "project")
     private List<Tech_Project> tech_projects;
 }

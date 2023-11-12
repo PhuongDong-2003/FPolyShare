@@ -7,11 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.UUID;
-
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @Table(name = "Users")
 public class User {
 
@@ -40,10 +39,18 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
-    @OneToMany(mappedBy = "users")
-    private List<Project> project;
+    @OneToMany(mappedBy = "userst")
+    private List<Project> projectst;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "usercs")
+    private List<Project> projectcs;
+
+    @OneToMany(mappedBy = "user")
     private List<User_Role> user_roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notification;
+
+
 
 }

@@ -1,9 +1,9 @@
 package com.example.api.Repository;
 
-import com.example.api.Entity.User;
+import com.example.api.Entity.FeedBack;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface FeedBackRepository extends JpaRepository<FeedBack, UUID> {
 }

@@ -11,8 +11,8 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Feedbacks")
-public class Feedback {
+@Table(name = "Feedback")
+public class FeedBack {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,6 +22,7 @@ public class Feedback {
     @Column(name = "content")
     private String content;
 
-    @OneToOne(mappedBy = "feedbacks")
-    private Project project;
+    @OneToOne
+    @JoinColumn(name = "project_id")
+    private Project projectfb;
 }

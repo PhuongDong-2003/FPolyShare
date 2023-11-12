@@ -12,9 +12,9 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Descriptions")
+@Table(name = "Description")
 public class Description {
-    //update
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -34,7 +34,7 @@ public class Description {
 
     @Column(name = "likeCount")
     private Integer likeCount;
-
-    @OneToOne(mappedBy = "descriptions")
-    private Project project;
+    @OneToOne
+    @JoinColumn(name = "project_id")
+    private Project projectds;
 }

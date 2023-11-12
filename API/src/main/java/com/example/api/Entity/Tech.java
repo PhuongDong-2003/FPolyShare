@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Techs")
+@Table(name = "Tech")
 public class Tech {
 
     @Id
@@ -23,6 +23,6 @@ public class Tech {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "techs")
+    @OneToMany(mappedBy = "tech")
     private List<Tech_Project> tech_projects;
 }
