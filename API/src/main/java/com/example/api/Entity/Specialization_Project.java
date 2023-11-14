@@ -1,5 +1,6 @@
 package com.example.api.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +26,6 @@ public class Specialization_Project {
 
     @ManyToOne
     @JoinColumn(name = "specicalization_id")
+    @JsonIgnore
     private Specialization specialization;
 }

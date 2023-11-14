@@ -1,7 +1,7 @@
 package com.example.api.Controller;
 
 import com.example.api.Entity.User;
-import com.example.api.Service.UserService;
+import com.example.api.Service.IService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

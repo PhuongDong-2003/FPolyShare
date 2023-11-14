@@ -1,4 +1,4 @@
-package com.example.api.Service;
+package com.example.api.Service.IService;
 
 import com.example.api.Entity.User;
 

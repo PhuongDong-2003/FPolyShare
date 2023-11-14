@@ -2,6 +2,7 @@ package com.example.api.Service;
 
 import com.example.api.Entity.User;
 import com.example.api.Repository.UserRepository;
+import com.example.api.Service.IService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
