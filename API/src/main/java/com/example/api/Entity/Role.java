@@ -1,6 +1,7 @@
 package com.example.api.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Role {
     private String name;
 
     @OneToMany(mappedBy = "role")
+    @JsonIgnore
     private List<User_Role> user_roles;
 
 
