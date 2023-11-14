@@ -1,5 +1,6 @@
 package com.example.api.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,5 +25,6 @@ public class Specialization {
     private String name;
 
     @OneToMany(mappedBy = "specialization")
+    @JsonIgnore
     private List<Specialization_Project> specialization_project;
 }

@@ -1,5 +1,6 @@
 package com.example.api.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,8 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private UUID id;
 
     @Column(name = "fullname")
@@ -40,15 +42,19 @@ public class User {
     private String avatar;
 
     @OneToMany(mappedBy = "userst")
+    @JsonIgnore
     private List<Project> projectst;
 
     @OneToMany(mappedBy = "usercs")
+    @JsonIgnore
     private List<Project> projectcs;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<User_Role> user_roles;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Notification> notification;
 
 

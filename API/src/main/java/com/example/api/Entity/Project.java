@@ -1,6 +1,7 @@
 package com.example.api.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +37,9 @@ public class Project {
     @Column(name = "sourcePath")
     private String sourcePath;
 
+    @Column(name = "thumnail")
+    private String thumnail;
+
     @OneToOne(mappedBy = "projectds",cascade = CascadeType.ALL)
     private Description description;
 
@@ -47,13 +51,16 @@ public class Project {
     private User userst;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "censor_id")
     private User usercs;
 
     @OneToMany(mappedBy = "project")
+    @JsonIgnore
     private List<Specialization_Project> specialization_project;
 
 
     @OneToMany(mappedBy = "project")
+    @JsonIgnore
     private List<Tech_Project> tech_projects;
 }

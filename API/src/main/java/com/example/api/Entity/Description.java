@@ -1,5 +1,6 @@
 package com.example.api.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +36,8 @@ public class Description {
     @Column(name = "likeCount")
     private Integer likeCount;
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "project_id")
     private Project projectds;
+    ///edit
 }
