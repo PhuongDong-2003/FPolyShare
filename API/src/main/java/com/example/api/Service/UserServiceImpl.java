@@ -1,6 +1,7 @@
 package com.example.api.Service;
 
 import com.example.api.Entity.User;
+import com.example.api.Exception.AppException;
 import com.example.api.Repository.UserRepository;
 import com.example.api.Service.IService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         // You can add validation logic here if needed
-        if(user != null){
-            return userRepository.save(user);
+
+        if (user != null && (!userRepository.existsByMssv(user.getMssv()) || !userRepository.existsByUsername(user.getUsername()))  ) {
+            // Kiểm tra các ràng buộc khác nếu cần thiết
+            if(user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getFullname().isEmpty()
+            || user.getMajor().isEmpty() || user.getMssv().isEmpty() || user.getEmail().isEmpty()) {
+                throw new AppException("Không thể tạo người dùng. Thông tin người dùng không được để trống.");
+            }
+                // Thêm người dùng mới vào repository
+                return userRepository.save(user);
+        } else {
+            throw new AppException("Không thể tạo người dùng. Người dùng đã tồn tại.");
         }
-        return null;
     }
 
     @Override
