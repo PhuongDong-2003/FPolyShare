@@ -22,12 +22,10 @@ public class User_Role {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User user;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    @JsonIgnore
     private Role role;
 
 }

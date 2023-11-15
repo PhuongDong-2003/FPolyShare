@@ -4,6 +4,7 @@ package com.example.api.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Table(name = "Project")
+@Builder(toBuilder = true)
 public class Project {
 
     @Id
@@ -22,7 +24,7 @@ public class Project {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "title")
+    @Column(name = "title", columnDefinition = "nvarchar(255)")
     private String title;
 
     @Column(name = "status")
@@ -51,14 +53,11 @@ public class Project {
     private User userst;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "censor_id")
     private User usercs;
 
     @OneToMany(mappedBy = "project")
-    @JsonIgnore
     private List<Specialization_Project> specialization_project;
-
 
     @OneToMany(mappedBy = "project")
     @JsonIgnore

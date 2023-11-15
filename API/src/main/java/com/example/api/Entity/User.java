@@ -20,8 +20,10 @@ public class User {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "fullname")
+    @Column(name = "fullname", columnDefinition = "nvarchar(255)")
     private String fullname;
+
+
 
     @Column(name = "username")
     private String username;
@@ -35,7 +37,7 @@ public class User {
     @Column(name = "mssv")
     private String mssv;
 
-    @Column(name = "major")
+    @Column(name = "major",  columnDefinition = "nvarchar(255)")
     private String major;
 
     @Column(name = "avatar")

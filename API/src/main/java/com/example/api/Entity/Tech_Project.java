@@ -27,6 +27,5 @@ public class Tech_Project {
 
     @ManyToOne
     @JoinColumn(name = "tech_id")
-    @JsonIgnore
     private Tech tech;
 }
