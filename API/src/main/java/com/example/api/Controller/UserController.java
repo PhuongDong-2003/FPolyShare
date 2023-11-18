@@ -1,7 +1,9 @@
 package com.example.api.Controller;
 
+import com.example.api.Entity.Role;
 import com.example.api.Entity.User;
-import com.example.api.Service.UserService;
+import com.example.api.Service.IService.RoleService;
+import com.example.api.Service.IService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +19,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    RoleService roleService;
 
     @PostMapping (consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createUser(@RequestBody User user) {
@@ -37,6 +42,12 @@ public class UserController {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+
+    @PostMapping("/find-by-major/{major}")
+    public List<User> findByMajor(@PathVariable("major") String major){
+        return userService.findByMajor(major);
     }
 
 }

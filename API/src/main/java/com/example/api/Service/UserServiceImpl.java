@@ -1,20 +1,34 @@
 package com.example.api.Service;
 
+import com.example.api.Entity.Role;
 import com.example.api.Entity.User;
+
+//import com.example.api.Entity.User_Role;
 import com.example.api.Exception.AppException;
+import com.example.api.Exception.UserAlreadyExistException;
+import com.example.api.Exception.UserNotFoundException;
+import com.example.api.Repository.RoleRepository;
 import com.example.api.Repository.UserRepository;
+//import com.example.api.Repository.User_RoleRepository;
+import com.example.api.Service.IService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
+
+
+//    @Autowired
+//    User_RoleRepository user_roleRepository;
 
     @Override
     public List<User> getAllUsers() {
@@ -29,19 +43,16 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(User user) {
-        // You can add validation logic here if needed
 
-        if (user != null && (!userRepository.existsByMssv(user.getMssv()) || !userRepository.existsByUsername(user.getUsername()))  ) {
-            // Kiểm tra các ràng buộc khác nếu cần thiết
-            if(user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getFullname().isEmpty()
-            || user.getMajor().isEmpty() || user.getMssv().isEmpty() || user.getEmail().isEmpty()) {
-                throw new AppException("Không thể tạo người dùng. Thông tin người dùng không được để trống.");
-            }
-                // Thêm người dùng mới vào repository
-                return userRepository.save(user);
-        } else {
-            throw new AppException("Không thể tạo người dùng. Người dùng đã tồn tại.");
+        Optional<User> checkUser = userRepository.findByUsername(user.getUsername());
+        if(checkUser.isPresent()){
+            throw new UserAlreadyExistException(user.getUsername() + "User already exist");
         }
+        Role role =roleRepository.findByName("STUDENT").get();
+        user.setRoles(Collections.singletonList(role));
+        return userRepository.save(user);
+
+
     }
 
     @Override
@@ -58,4 +69,15 @@ public class UserServiceImpl implements UserService{
     public void deleteUser(UUID userId) {
         userRepository.deleteById(userId);
     }
+
+    @Override
+    public List<User> findByMajor(String major) {
+        List<User> users = userRepository.findByMajor(major);
+        if(users.isEmpty()){
+            throw new UserNotFoundException("No users found with major: " + major);
+        }
+        return users;
+    }
+
+
 }

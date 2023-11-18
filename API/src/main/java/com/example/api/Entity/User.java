@@ -1,10 +1,13 @@
 package com.example.api.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 @Entity
@@ -19,8 +22,10 @@ public class User {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "fullname")
+    @Column(name = "fullname", columnDefinition = "nvarchar(255)")
     private String fullname;
+
+
 
     @Column(name = "username")
     private String username;
@@ -34,23 +39,33 @@ public class User {
     @Column(name = "mssv")
     private String mssv;
 
-    @Column(name = "major")
+    @Column(name = "major",  columnDefinition = "nvarchar(255)")
     private String major;
 
     @Column(name = "avatar")
     private String avatar;
+//
+//    @OneToMany(mappedBy = "userst")
+//    @JsonIgnore
+//    private List<Project> projectst;
+//
+//    @OneToMany(mappedBy = "usercs")
+//    @JsonIgnore
+//    private List<Project> projectcs;
 
-    @OneToMany(mappedBy = "userst")
-    private List<Project> projectst;
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnore
+//    private List<User_Role> user_roles;
 
-    @OneToMany(mappedBy = "usercs")
-    private List<Project> projectcs;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<User_Role> user_roles;
 
-    @OneToMany(mappedBy = "user")
-    private List<Notification> notification;
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnore
+//    private List<Notification> notification;
 
 
 
