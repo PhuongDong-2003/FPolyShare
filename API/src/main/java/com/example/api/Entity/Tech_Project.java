@@ -18,17 +18,17 @@ import java.util.UUID;
 @Builder(toBuilder = true)
 public class Tech_Project  {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.UUID)
-//    @Column(name = "id")
-//    private UUID id;
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private UUID id;
+
     @ManyToOne
     @JoinColumn(name = "project_id")
     @JsonIgnore
     private Project project;
 
-    @Id
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "tech_id")

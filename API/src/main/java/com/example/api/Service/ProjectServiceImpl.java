@@ -142,6 +142,7 @@ public class ProjectServiceImpl implements ProjectService  {
                         techRepository.save(tech);
 
                         Tech_Project tech_project = Tech_Project.builder()
+                                .id(detail.getTech().getId())
                                 .tech(tech)
                                 .project(project)
                                 .build();
