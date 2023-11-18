@@ -23,7 +23,7 @@ public class Description {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "creatDate")
+    @Column(name = "creatDate", nullable = false)
     private Date create_Date;
 
     @Column(name = "approvalDate")

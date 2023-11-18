@@ -11,11 +11,17 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, UUID> {
-    List<Project> findByUsercs_Id(UUID userId);
+    @Query("select p  from Project p  where p.status = '1' and p.usercs.id = :userId")
+    List<Project> findByProjectAC_UserId(@Param("userId") UUID userId);
 
-   Project findByIdQr(UUID id);
-    @Query("SELECT s FROM Project s WHERE s.id = :id")
-    Specialization findSpecializationById(@Param("id") UUID id);
+    @Query("select p  from Project p  where p.usercs.id = :userId")
+    List<Project> findByProject_UserId(@Param("userId") UUID userId);
+
+    @Query("select p from Project p where p.status = '1' ")
+    List<Project> findAllProject();
+
+    @Query("select p  from Project p inner join User u on p.usercs.id = u.id  where (p.status = '1' and p.title like %:keyWord% or u.major like %:keyWord%)")
+    List<Project> findByKeyWord(@Param("keyWord") String keyWord);
 
 
 }

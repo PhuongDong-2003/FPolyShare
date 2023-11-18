@@ -22,7 +22,7 @@ public class Role {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "role")

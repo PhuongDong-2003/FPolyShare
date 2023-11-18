@@ -16,13 +16,12 @@ import java.util.UUID;
 @Table(name = "Feedback")
 @Builder(toBuilder = true)
 public class FeedBack {
-//update entity
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "content")
+    @Column(name = "content",columnDefinition = "nvarchar(255)", nullable = false)
     private String content;
 
     @OneToOne

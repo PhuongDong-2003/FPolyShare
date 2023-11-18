@@ -3,9 +3,11 @@ package com.example.api.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Tech")
+@Builder(toBuilder = true)
 public class Tech {
 
     @Id
@@ -21,10 +24,9 @@ public class Tech {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "tech")
-    @JsonIgnore
-    private List<Tech_Project> tech_projects;
+    private List<Tech_Project> tech_projects = new ArrayList<>();
 }

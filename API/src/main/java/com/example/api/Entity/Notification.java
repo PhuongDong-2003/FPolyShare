@@ -22,10 +22,10 @@ public class Notification {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "title")
+    @Column(name = "title", columnDefinition = "nvarchar(255)", nullable = false)
     private String title;
 
-    @Column(name = "message")
+    @Column(name = "message", nullable = false)
     private String message;
 
     @Column(name = "isRead")

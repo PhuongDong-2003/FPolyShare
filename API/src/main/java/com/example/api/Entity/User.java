@@ -20,42 +20,42 @@ public class User {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "fullname", columnDefinition = "nvarchar(255)")
+    @Column(name = "fullname", columnDefinition = "nvarchar(255)", nullable = false)
     private String fullname;
 
 
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "mssv")
+    @Column(name = "mssv", nullable = false)
     private String mssv;
 
-    @Column(name = "major",  columnDefinition = "nvarchar(255)")
+    @Column(name = "major",  columnDefinition = "nvarchar(255)", nullable = false)
     private String major;
 
     @Column(name = "avatar")
     private String avatar;
 
-    @OneToMany(mappedBy = "userst")
+    @OneToMany(mappedBy = "userst",cascade = CascadeType.ALL, orphanRemoval = true )
     @JsonIgnore
     private List<Project> projectst;
 
-    @OneToMany(mappedBy = "usercs")
+    @OneToMany(mappedBy = "usercs", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Project> projectcs;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<User_Role> user_roles;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Notification> notification;
 

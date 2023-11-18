@@ -1,31 +1,40 @@
 package com.example.api.Service;
 
+import com.example.api.DTO.FeedBackDTO;
 import com.example.api.DTO.ProjectDTO;
 import com.example.api.Entity.*;
+import com.example.api.Exception.AppException;
 import com.example.api.Repository.*;
 import com.example.api.Service.IService.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ProjectServiceImpl implements ProjectService {
+public class ProjectServiceImpl implements ProjectService  {
     @Autowired
     ProjectRepository projectRepository;
     @Autowired
-    Specialization_ProjectRepository specializationProjectRepository;
+    Tech_ProjectRepository techProjectRepository;
     @Autowired
-    SpecializationRepository specializationRepository;
+    TechRepository techRepository;
     @Autowired
     DescriptionRepository descriptionRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    FeedBackRepository feedBackRepository;
 
-    @Override
-    public Specialization getSpecializationById(UUID id) {
-        return specializationRepository.findById(id).orElse(null);
-    }
+
+
+//    @Override
+//    public Specialization getSpecializationById(UUID id) {
+//        return specializationRepository.findById(id).orElse(null);
+//    }
 
     @Override
     public Project getSProjectById(UUID id) {
@@ -34,13 +43,24 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+        return projectRepository.findAllProject();
     }
 
     @Override
-    public List<Project> findProjectsByUsercsId(String userId) {
-        return projectRepository.findByUsercs_Id(UUID.fromString(userId));
+    public List<Project> findProjectsAC_UserId(UUID userId) {
+        return projectRepository.findByProjectAC_UserId(userId);
     }
+
+    @Override
+    public List<Project> findByProject_UserId(UUID userId) {
+      return  projectRepository.findByProject_UserId(userId);
+    }
+
+    @Override
+    public List<Project> findByKeyWord(String keyWord) {
+        return projectRepository.findByKeyWord(keyWord);
+    }
+
     @Override
     public Project getProjectDetailsById(UUID projectId) {
 
@@ -51,38 +71,12 @@ public class ProjectServiceImpl implements ProjectService {
             Project project = projectOptional.get();
             return  project;
         } else {
-            // Xử lý trường hợp không tìm thấy Project
             return null;
         }
     }
 
 
-    @Override
-    public Project CreateProject(ProjectDTO projectDTO)
-    {
-       
-        Project project = mapProjectDTOtoProject(projectDTO);
-        projectRepository.save(project);
-
-        projectDTO.getSpecializations().forEach(specialization ->
-        {
-                specializationRepository.save(mapProjectDTOSpecialization(projectDTO));
-        });
-
-//        projectDTO.getSpecialization_project().forEach(specializationProject -> {
-//            Specialization rsSpecialization = specializationRepository.findByIdQr(projectDTO.getSpecialization().getId());
-//            Project rsProject = projectRepository.findByIdQr(projectDTO.getId());
-//             specializationProjectRepository.save(
-//                    Specialization_Project.builder()
-//                            .id(specializationProject.getId())
-//                            .specialization(rsSpecialization)
-//
-//            );
-//
-//        });
-
-        return null;
-    }
+   
     @Override
     public Description mapProjectDTOtoDescription(ProjectDTO projectDTO) {
        var resultProject =  getProjectDetailsById(projectDTO.getId());
@@ -96,25 +90,81 @@ public class ProjectServiceImpl implements ProjectService {
                 .build();
     }
 
-    @Override
-    public Specialization mapProjectDTOSpecialization(ProjectDTO projectDTO) {
-        return Specialization.builder()
-                .id(projectDTO.getSpecialization().getId())
-                .name((projectDTO.getSpecialization().getName()))
-                .build();
-    }
+
+    // @Override
+    // public Project mapProjectDTOtoProject(ProjectDTO projectDTO) {
+    //     return Project.builder()
+    //             .id(projectDTO.getId())
+    //             .title(projectDTO.getTitle())
+    //             .status(projectDTO.getStatus())
+    //             .isPublic(projectDTO.getIsPublic())
+    //             .videoPath(projectDTO.getVideoPath())
+    //             .sourcePath(projectDTO.getSourcePath())
+    //             .thumnail(projectDTO.getThumnail())
+    //             .build();
+    // }
 
     @Override
-    public Project mapProjectDTOtoProject(ProjectDTO projectDTO) {
-        return Project.builder()
+    public Project CreateProject(ProjectDTO projectDTO) {
+        User userst = null;
+        User usercs = null;
+        Optional<User> optionalst = userRepository.findById(projectDTO.getUserst().getId());
+        Optional<User> optionalcs = userRepository.findById(projectDTO.getUsercs().getId());
+
+        if (optionalst.isPresent() && optionalcs.isPresent()) {
+            userst = optionalst.get();
+            usercs = optionalcs.get();
+        } else {
+            throw new AppException("User not exist");
+        }
+        Project project = Project.builder()
                 .id(projectDTO.getId())
                 .title(projectDTO.getTitle())
                 .status(projectDTO.getStatus())
                 .isPublic(projectDTO.getIsPublic())
-                .videoPath(projectDTO.getVideoPath())
                 .sourcePath(projectDTO.getSourcePath())
+                .videoPath(projectDTO.getVideoPath())
                 .thumnail(projectDTO.getThumnail())
+                .userst(userst)
+                .usercs(usercs)
+                .description(null)
+                .feedback(null)
+                .tech_projects(new ArrayList<>())
                 .build();
+        projectRepository.save(project);
+
+                projectDTO.getTechDTOList().forEach(detail -> {
+                    if (detail.getTech() != null) {
+                        Tech tech = Tech.builder()
+                                .id(detail.getTech().getId())
+                                .name(detail.getTech().getName())
+                                .build();
+                        techRepository.save(tech);
+
+                        Tech_Project tech_project = Tech_Project.builder()
+                                .tech(tech)
+                                .project(project)
+                                .build();
+                        techProjectRepository.save(tech_project);
+                    } else {
+
+                        throw new AppException("Tech cannot be null");
+                    }
+                });
+
+   return null;
+    }
+    public void DeleteProjectId(UUID projectID) {
+        projectRepository.deleteById(projectID);
+    }
+    @Override
+    public FeedBack CreateFeedback(FeedBackDTO feedBackDTO) {
+        FeedBack feedBack = FeedBack.builder()
+                .id(feedBackDTO.getId())
+                .content(feedBackDTO.getContent())
+                .projectfb(feedBackDTO.getProjectfb())
+                .build();
+        return feedBackRepository.save(feedBack)  ;
     }
 
 

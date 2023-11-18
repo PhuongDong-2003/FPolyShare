@@ -1,13 +1,11 @@
 package com.example.api.DTO;
 
 import com.example.api.Entity.*;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,15 +31,14 @@ public class ProjectDTO {
 
     Description description;
 
-    Specialization specialization;
+    FeedBack feedBack;
 
     User userst;
 
     User usercs;
 
-    List<Specialization> specializations;
-
-    List<Specialization_Project> specialization_project;
+ 
+    List<Tech_Project> techDTOList;
 
 
 
