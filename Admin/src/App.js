@@ -10,7 +10,7 @@ import { Form } from "./pages/form";
 import { List } from "./pages/list";
 import { Mentors } from "./pages/mentors";
 import { Students } from "./pages/students";
-import { Chart } from "./pages/chart";
+import { Bar } from "./pages/bar";
 import { Profile } from "./pages/profile";
 import { ChangeInfo } from "./pages/changeinfo";
 import { Auth } from "./components/Auth";
@@ -33,7 +33,7 @@ function App() {
                 <Route path="/mentors" element={<Mentors />} />
                 <Route path="/students" element={<Students />} />
                 <Route path="/form" element={<Form />} />
-                <Route path="/chart" element={<Chart />} />
+                <Route path="/bar" element={<Bar />} />
                 <Route path="/faq" element={<FAQ />} />
                 {/* drop down */}
                 <Route path="/profile" element={<Profile />} />

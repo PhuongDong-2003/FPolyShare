@@ -10,6 +10,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
+import { useState } from "react";
 
 export const List = () => {
     const theme = useTheme();
@@ -72,7 +73,8 @@ export const List = () => {
             );
         },
     },
-]
+    ]
+    const [collapsed,isCollapsed] = useState(false);
     return (
         <Box m="20px">
         <Box display="flex" justifyContent="space-between" >

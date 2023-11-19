@@ -60,3 +60,138 @@ export const mockData = [
         avatar:"user.jpg",
     },
 ];
+export const mockBarData = [
+  {
+    Months: "Th1",
+    "UDPM": 137,
+    "UDPMColor": "hsl(229, 70%, 50%)",
+    LTMT: 96,
+    LTMTColor: "hsl(296, 70%, 50%)",
+    IOT: 72,
+    IOTColor: "hsl(97, 70%, 50%)",
+    MOB: 140,
+    MOBColor: "hsl(340, 70%, 50%)"
+  },
+  {
+    Months: "Th2",
+    "UDPM": 55,
+    "UDPMColor": "hsl(307, 70%, 50%)",
+    LTMT: 28,
+    LTMTColor: "hsl(111, 70%, 50%)",
+    IOT: 58,
+    IOTColor: "hsl(273, 70%, 50%)",
+    MOB: 29,
+    MOBColor: "hsl(275, 70%, 50%)"
+  },
+  {
+    Months: "Th3",
+    "UDPM": 109,
+    "UDPMColor": "hsl(72, 70%, 50%)",
+    LTMT: 23,
+    LTMTColor: "hsl(96, 70%, 50%)",
+    IOT: 34,
+    IOTColor: "hsl(106, 70%, 50%)",
+    MOB: 152,
+    MOBColor: "hsl(256, 70%, 50%)"
+  },
+  {
+    Months: "Th4",
+    "UDPM": 133,
+    "UDPMColor": "hsl(257, 70%, 50%)",
+    LTMT: 52,
+    LTMTColor: "hsl(326, 70%, 50%)",
+    IOT: 43,
+    IOTColor: "hsl(110, 70%, 50%)",
+    MOB: 83,
+    MOBColor: "hsl(9, 70%, 50%)"
+  },
+  {
+    Months: "Th5",
+    "UDPM": 81,
+    "UDPMColor": "hsl(190, 70%, 50%)",
+    LTMT: 80,
+    LTMTColor: "hsl(325, 70%, 50%)",
+    IOT: 112,
+    IOTColor: "hsl(54, 70%, 50%)",
+    MOB: 35,
+    MOBColor: "hsl(285, 70%, 50%)"
+  },
+  {
+    Months: "Th6",
+    "UDPM": 66,
+    "UDPMColor": "hsl(208, 70%, 50%)",
+    LTMT: 111,
+    LTMTColor: "hsl(334, 70%, 50%)",
+    IOT: 167,
+    IOTColor: "hsl(182, 70%, 50%)",
+    MOB: 18,
+    MOBColor: "hsl(76, 70%, 50%)"
+  },
+  {
+    Months: "Th7",
+    "UDPM": 80,
+    "UDPMColor": "hsl(87, 70%, 50%)",
+    LTMT: 47,
+    LTMTColor: "hsl(141, 70%, 50%)",
+    IOT: 158,
+    IOTColor: "hsl(224, 70%, 50%)",
+    MOB: 49,
+    MOBColor: "hsl(274, 70%, 50%)"
+  },
+  {
+    Months: "Th9",
+    "UDPM": 80,
+    "UDPMColor": "hsl(87, 70%, 50%)",
+    LTMT: 47,
+    LTMTColor: "hsl(141, 70%, 50%)",
+    IOT: 158,
+    IOTColor: "hsl(224, 70%, 50%)",
+    MOB: 49,
+    MOBColor: "hsl(274, 70%, 50%)"
+  },
+  {
+    Months: "Th10",
+    "UDPM": 80,
+    "UDPMColor": "hsl(87, 70%, 50%)",
+    LTMT: 47,
+    LTMTColor: "hsl(141, 70%, 50%)",
+    IOT: 158,
+    IOTColor: "hsl(224, 70%, 50%)",
+    MOB: 49,
+    MOBColor: "hsl(274, 70%, 50%)"
+  },
+  {
+    Months: "Th11",
+    "UDPM": 80,
+    "UDPMColor": "hsl(87, 70%, 50%)",
+    LTMT: 47,
+    LTMTColor: "hsl(141, 70%, 50%)",
+    IOT: 158,
+    IOTColor: "hsl(224, 70%, 50%)",
+    MOB: 49,
+    MOBColor: "hsl(274, 70%, 50%)"
+  },
+  {
+    Months: "Th12",
+    "UDPM": 80,
+    "UDPMColor": "hsl(87, 70%, 50%)",
+    LTMT: 47,
+    LTMTColor: "hsl(141, 70%, 50%)",
+    IOT: 158,
+    IOTColor: "hsl(224, 70%, 50%)",
+    MOB: 49,
+    MOBColor: "hsl(274, 70%, 50%)"
+  },
+  {
+    Months: "Th7",
+    "UDPM": 80,
+    "UDPMColor": "hsl(87, 70%, 50%)",
+    LTMT: 47,
+    LTMTColor: "hsl(141, 70%, 50%)",
+    IOT: 158,
+    IOTColor: "hsl(224, 70%, 50%)",
+    MOB: 49,
+    DAColor: "hsl(274, 70%, 50%)"
+  }
+  
+];
