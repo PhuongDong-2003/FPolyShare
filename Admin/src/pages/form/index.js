@@ -52,8 +52,9 @@ export const Form = () => {
     const isNonMobile = useMediaQuery("(min-width: 600px)")
     // LẤY DATA TỪ BÀN PHÍM FORM
     const [code, setcode] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [fullName, setFullName] = useState('');
+    // const [firstName, setFirstName] = useState('');
+    // const [lastName, setLastName] = useState('');
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('Username_123');
     const [role, setRole] = useState('');
@@ -65,8 +66,9 @@ export const Form = () => {
         event.preventDefault(); 
         const newFormData = {
             code: code,
-            firstName: firstName,
-            lastName: lastName,
+            // firstName: firstName,
+            // lastName: lastName,
+            fullName:fullName,
             userName: userName,
             password: password,
             role: role,
@@ -80,8 +82,9 @@ export const Form = () => {
     // CLEAN FORM
     const resetForm = () => [
         setcode(""),
-        setFirstName(""),
-        setLastName(""),
+        // setFirstName(""),
+        // setLastName(""),
+        setFullName(""),
         setUserName(""),
         // setPassword(""),
         setRole(""),
@@ -157,7 +160,7 @@ export const Form = () => {
                                 sx={{ gridColumn: "span 2" }}
                             />
                             {/* FIRST NAME */}
-                            <TextField
+                            {/* <TextField
                                 fullWidth
                                 variant='filled'
                                 type='text'
@@ -167,9 +170,9 @@ export const Form = () => {
                                 value={firstName}
                                 name='firstName'
                                 sx={{ gridColumn: "span 2" }}
-                            />
+                            /> */}
                             {/* LÁT NAME */}
-                            <TextField
+                            {/* <TextField
                                 fullWidth
                                 variant='filled'
                                 type='text'
@@ -179,8 +182,19 @@ export const Form = () => {
                                 value={lastName}
                                 name='lastName'
                                 sx={{ gridColumn: "span 2" }}
+                            /> */}
+                            {/* FIRST NAME */}
+                            <TextField
+                                fullWidth
+                                variant='filled'
+                                type='text'
+                                label="Họ và Tên"
+                                onBlur={handleBlur}
+                                onChange={(e) => setFullName(e.target.value)}
+                                value={fullName}
+                                name='fullName'
+                                sx={{ gridColumn: "span 2" }}
                             />
-                            
                             {/* EMAIL */}
                             <TextField
                                 fullWidth
