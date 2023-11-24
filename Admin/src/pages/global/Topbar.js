@@ -32,8 +32,8 @@ export const Topbar = () => {
     return (
         <Box display="flex" justifyContent="space-between" p={2}>
             {/* SEARCH BAR */}
-            <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="10px" width="800px" marginLeft={50}>
-                <InputBase sx={{ml:2, flex: 1, fontSize:"20px"}} placeholder="Search..."/>
+            <Box display="flex" backgroundColor={colors.primary[400]} borderRadius="5px" width="300px" >
+                <InputBase sx={{ml:2, flex: 1, fontSize:"16px"}} placeholder="Search..."/>
                 <IconButton type="button" sx={{ p: 1 }}>
                     <SearchIcon/>
                 </IconButton>

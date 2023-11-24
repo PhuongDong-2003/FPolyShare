@@ -1,4 +1,4 @@
-import { Box, Button, Link, Typography, useTheme } from "@mui/material";
+import { Box, Button, Checkbox, Link, Typography, useTheme } from "@mui/material";
 import { DataGridPremium,GridToolbar  } from "@mui/x-data-grid-premium";
 import { tokens } from "../../theme";
 import { mockData } from "../../data/mockData";
@@ -10,6 +10,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined';
+import { useState } from "react";
 
 export const List = () => {
     const theme = useTheme();
@@ -22,8 +23,8 @@ export const List = () => {
         field: "fullName",
         headerName: "Họ và Tên",
         width:200,
-        valueGetter: (params) =>
-            `${params.row.lastName || ""} ${params.row.firstName || ""}`
+        // valueGetter: (params) =>
+        //     `${params.row.lastName || ""} ${params.row.firstName || ""}`
         },
         //USERNAME
         {
@@ -70,15 +71,32 @@ export const List = () => {
                 </Typography>
             </Box>
             );
+            },
         },
-    },
-]
+        {
+            headerName :"Admin",
+            field: "booleanValue",
+            editComponent: (props) => {
+              return (
+                <Checkbox
+                    defaultChecked
+                  checked={props.value}
+                  onChange={(e) => props.onChange(e.target.checked)}
+                />
+              );
+            },
+            render: (rowdata) => (
+              <input type="checkbox" checked={rowdata.booleanValue} />
+            )
+          }
+    ]
+    const [collapsed,isCollapsed] = useState(false);
     return (
         <Box m="20px">
         <Box display="flex" justifyContent="space-between" >
             <Header title="THÔNG TIN TẤT CẢ NGƯỜI DÙNG" subtitle="Quản lý tài khoản User" />
             <Box>
-                <Link href="/" sx={{margin:"10px"}}>
+                {/* <Link href="/" sx={{margin:"10px"}}>
                     <Button 
                         sx={{backgroundColor:colors.blueAccent[700],
                             color: colors.grey[100],
@@ -101,7 +119,7 @@ export const List = () => {
                     >
                         <DriveFileRenameOutlineOutlinedIcon/> Chỉnh sửa
                     </Button>
-                </Link>
+                </Link> */}
                 <Link href="/form" sx={{margin:"10px"}}>
                     <Button 
                         sx={{backgroundColor:colors.blueAccent[700],

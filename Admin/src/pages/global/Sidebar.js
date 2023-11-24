@@ -161,10 +161,10 @@ export const Sidebar = () => {
                             variant="h6"
                             color={colors.grey[300]}
                             sx={{ m: "15px 0 5px 20px" }}
-                        > Report </Typography>
+                        > Phân tích </Typography>
                         <Item
                             title="Báo cáo thống kê"
-                            to="/chart"
+                            to="/bar"
                             icon={<BarChartOutlinedIcon />}
                             selected={selected}
                             setSelected={setSelected}
