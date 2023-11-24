@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ResponseError {
     private String message;
-    private Object data;
 }

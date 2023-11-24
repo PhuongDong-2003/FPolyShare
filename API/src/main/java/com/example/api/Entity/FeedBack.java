@@ -3,7 +3,6 @@ package com.example.api.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Feedback")
-@Builder(toBuilder = true)
 public class FeedBack {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -24,8 +22,8 @@ public class FeedBack {
     @Column(name = "content",columnDefinition = "nvarchar(255)", nullable = false)
     private String content;
 
-    @OneToOne
     @JsonIgnore
+    @OneToOne
     @JoinColumn(name = "project_id")
     private Project projectfb;
 }

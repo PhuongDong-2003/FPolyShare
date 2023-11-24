@@ -1,4 +1,4 @@
-package com.example.api.Service.IService;
+package com.example.api.Service;
 
 import com.example.api.Entity.User;
 
@@ -12,5 +12,6 @@ public interface UserService {
     User createUser(User user);
     User updateUser(UUID userId, User user);
     void deleteUser(UUID userId);
+    public List<User> findByMajor(String major);
 
 }

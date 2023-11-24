@@ -7,9 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Data
@@ -27,6 +25,9 @@ public class Tech {
     @Column(name = "name",nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "tech")
-    private List<Tech_Project> tech_projects = new ArrayList<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "techs")
+    private Collection<Project> projects = new HashSet<>();
+
+
 }

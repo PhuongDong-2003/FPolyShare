@@ -1,13 +1,13 @@
 package com.example.api.Entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +16,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Table(name = "Project")
-@Builder(toBuilder = true)
 public class Project {
 
     @Id
@@ -42,6 +41,9 @@ public class Project {
     @Column(name = "thumnail", nullable = false)
     private String thumnail;
 
+    @Column(name = "major", columnDefinition = "nvarchar(255)", nullable = false)
+    private String major;
+
     @OneToOne(mappedBy = "projectds",cascade = CascadeType.ALL)
     private Description description;
 
@@ -56,10 +58,15 @@ public class Project {
     @JoinColumn(name = "censor_id")
     private User usercs;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Specialization_Project> specialization_project;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @JoinTable(name = "tech_project", joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "tech_id", referencedColumnName = "id"))
+    private Collection<Tech> techs = new HashSet<>();
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
 
-    private List<Tech_Project> tech_projects;
+    public void addTech(Tech tech) {
+        if (!techs.contains(tech)) {
+            techs.add(tech);
+        }
+    }
 }

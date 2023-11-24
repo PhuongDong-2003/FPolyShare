@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 @Entity
@@ -43,6 +45,7 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
+
     @OneToMany(mappedBy = "userst",cascade = CascadeType.ALL, orphanRemoval = true )
     @JsonIgnore
     private List<Project> projectst;
@@ -51,13 +54,25 @@ public class User {
     @JsonIgnore
     private List<Project> projectcs;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<User_Role> user_roles;
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnore
+//    private List<User_Role> user_roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Notification> notification;
+
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Collection<Role> roles = new HashSet<>();
+
+
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnore
+//    private List<Notification> notification;
+
 
 
 

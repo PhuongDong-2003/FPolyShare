@@ -1,16 +1,13 @@
 package com.example.api.Service.IService;
 
-import com.example.api.DTO.FeedBackDTO;
-import com.example.api.DTO.ProjectDTO;
+import com.example.api.DTO.Request;
 import com.example.api.Entity.*;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface ProjectService {
 
-//    public Specialization getSpecializationById(UUID id);
 
     public Project getSProjectById(UUID id);
 
@@ -24,14 +21,21 @@ public interface ProjectService {
 
     List<Project> findByKeyWord( String keyWord);
 
-    // public Project mapProjectDTOtoProject(ProjectDTO projectDTO);
+    public Project CreateProject(Project project);
 
-    public  Description mapProjectDTOtoDescription(ProjectDTO projectDTO);
+    public Project UpdateProjectAccess(Project updatedProject);
 
-    public Project CreateProject (ProjectDTO projectDTO);
+    public Project UpdateProjectNotAccess(Project updatedProject);
 
-    public void DeleteProjectId(UUID projectID);
+    public List<Project> FindByProjectWait(UUID id);
 
-    public FeedBack CreateFeedback( FeedBackDTO feedBackDTO);
+    public List<Project> FindByProjectProcessed(UUID id);
+
+    public FeedBack FindByFeedBackProjectID( UUID projectID);
+
+    Project updateIsPublic(Request request);
+//    public void DeleteProjectId(UUID projectID);
+//
+//    public FeedBack CreateFeedback( FeedBackDTO feedBackDTO);
 
 }

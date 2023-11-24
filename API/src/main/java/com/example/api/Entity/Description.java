@@ -3,7 +3,6 @@ package com.example.api.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Description")
-@Builder(toBuilder = true)
 public class Description {
 
     @Id
@@ -37,9 +35,10 @@ public class Description {
 
     @Column(name = "likeCount")
     private Integer likeCount;
-    @OneToOne
+
     @JsonIgnore
+    @OneToOne
     @JoinColumn(name = "project_id")
     private Project projectds;
-    ///edit
+
 }

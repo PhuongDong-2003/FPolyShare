@@ -29,6 +29,8 @@ public class ProjectDTO {
 
     String thumnail;
 
+    String major;
+
     Description description;
 
     FeedBack feedBack;
@@ -37,8 +39,7 @@ public class ProjectDTO {
 
     User usercs;
 
- 
-    List<Tech_Project> techDTOList;
+    List<Tech> techDTOList;
 
 
 
