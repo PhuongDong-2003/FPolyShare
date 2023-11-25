@@ -16,4 +16,12 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findById(UUID id);
     @Query("SELECT u FROM User u WHERE u.major LIKE %:major%")
     List<User> findByMajor(@Param("major") String major);
+
+    @Query("select  distinct major from User")
+    List<String> getAllMarjor();
+
+    @Query("SELECT u FROM User u " +
+            "JOIN u.roles r " +
+            "WHERE u.major = :major AND r.name = 'Censor'")
+    List<User> findByMajorWithRole(@Param("major") String major);
 }

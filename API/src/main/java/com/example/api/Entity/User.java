@@ -25,8 +25,6 @@ public class User {
     @Column(name = "fullname", columnDefinition = "nvarchar(255)", nullable = false)
     private String fullname;
 
-
-
     @Column(name = "username", nullable = false)
     private String username;
 

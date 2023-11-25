@@ -3,6 +3,7 @@ package com.example.api.Service.IService;
 import com.example.api.DTO.Request;
 import com.example.api.Entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,6 +13,8 @@ public interface ProjectService {
     public Project getSProjectById(UUID id);
 
     List<Project> getAllProjects();
+
+    List<String> getAlTechName();
 
     public Project getProjectDetailsById(UUID projectId);
 

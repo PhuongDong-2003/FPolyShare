@@ -1,6 +1,7 @@
 package com.example.api.Service;
 
 import com.example.api.Entity.User;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,5 +14,9 @@ public interface UserService {
     User updateUser(UUID userId, User user);
     void deleteUser(UUID userId);
     public List<User> findByMajor(String major);
+
+    List<String> getAllMarjor();
+
+    List<User> findByMajorWithRole(@Param("major") String major);
 
 }

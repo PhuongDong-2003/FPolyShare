@@ -11,6 +11,7 @@ import com.example.api.Repository.UserRepository;
 //import com.example.api.Repository.User_RoleRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -78,5 +79,16 @@ public class UserServiceImpl implements UserService {
       return null;
     }
 
+    @Override
+    public List<String> getAllMarjor() {
+        return userRepository.getAllMarjor();
+    }
+
+
+
+    public List<User> findByMajorWithRole(@Param("major") String major)
+    {
+        return userRepository.findByMajorWithRole(major);
+    }
 
 }

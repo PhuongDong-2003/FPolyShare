@@ -1,8 +1,13 @@
 package com.example.api.Controller;
 
+import com.example.api.Entity.Project;
 import com.example.api.Entity.Role;
 import com.example.api.Entity.User;
 
+import com.example.api.Response.ApiResponse;
+import com.example.api.Response.ResponseError;
+import com.example.api.Service.UserService;
+import com.example.api.Service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,8 +21,8 @@ import java.util.UUID;
 @RequestMapping("/api/users")
 public class UserController {
 
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private UserServiceImpl userService;
 //
 //    @Autowired
 //    RoleService roleService;
@@ -48,5 +53,33 @@ public class UserController {
 //    public List<User> findByMajor(@PathVariable("major") String major){
 //        return userService.findByMajor(major);
 //    }
+        @GetMapping("/getAllMajor")
+        public ResponseEntity<ApiResponse<?>> GetTechName() {
+            List<String> marjor = userService.getAllMarjor();
+            if(marjor !=null)
+            {
+                return ResponseEntity.ok(new ApiResponse<List<String>>("Load dữ liệu thành công", marjor));
+            }
+            else
+            {
 
+                return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Load dữ liệu thành công", new ResponseError("Không có dữ liệu ")));
+            }
+
+        }
+
+
+    @GetMapping(value ={"/findByMarjor/{major}"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<?>> FindByMajor(@PathVariable String major) {
+        List<User> users = userService.findByMajorWithRole(major);
+        if(!users.isEmpty())
+        {
+            return ResponseEntity.ok(new ApiResponse< List<User>>("Tìm kếm thành công", users));
+        }
+        else
+        {
+
+            return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Tìm kiếm không thành công", new ResponseError("Không có user nào có"+ major)));
+        }
+    }
 }

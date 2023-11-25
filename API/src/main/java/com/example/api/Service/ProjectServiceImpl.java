@@ -36,6 +36,11 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    public List<String> getAlTechName() {
+        return  techRepository.getAlTechName();
+    }
+
+    @Override
     public List<Project> findProjectsAC_UserId(UUID userId) {
         return projectRepository.findByProjectAC_UserId(userId);
     }
@@ -134,14 +139,8 @@ public class ProjectServiceImpl implements ProjectService {
             existingProject.setSourcePath(updatedProject.getSourcePath());
             existingProject.setThumnail(updatedProject.getThumnail());
             existingProject.setMajor(updatedProject.getMajor());
-
-
             existingProject.getDescription().setApproval_Date(updatedProject.getDescription().getApproval_Date());
-
-
             existingProject.setUsercs(user);
-
-
             return projectRepository.save(existingProject);
         } else {
 

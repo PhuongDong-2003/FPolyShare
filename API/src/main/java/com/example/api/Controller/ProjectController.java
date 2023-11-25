@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -48,8 +49,6 @@ public class ProjectController {
         }
 
     }
-
-
 
     @GetMapping(value ={"/projectAcbyUsercs/{userId}"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> GetProjectsAcByUsercsId(@PathVariable UUID userId) {
@@ -135,6 +134,21 @@ public class ProjectController {
         }
 
     }
+
+    @GetMapping("/getTechName")
+    public ResponseEntity<ApiResponse<?>> GetTechName() {
+        List<String> tech = projectServiceImpl.getAlTechName();
+        if(tech !=null)
+        {
+            return ResponseEntity.ok(new ApiResponse<List<String>>("Load dữ liệu thành công", tech));
+        }
+        else
+        {
+
+            return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Load dữ liệu thành công", new ResponseError("Không có dữ liệu ")));
+        }
+
+    }
     @PostMapping(value ={"/createproject"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> CreateProject(@RequestBody Project project) {
 
@@ -192,9 +206,6 @@ public class ProjectController {
        projectServiceImpl.getProjectDetailsById(projectId);
        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
-
-
     }
-
 
 }
