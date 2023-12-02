@@ -34,7 +34,4 @@ public interface ProjectRepository extends JpaRepository<Project, UUID> {
     List<Project> findByProjectProcessed(@Param("userId") UUID userId);
 
 
-
-
-
 }
