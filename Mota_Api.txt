@@ -69,85 +69,18 @@
 - {{{url}}/api/projects/replyProject (Giảng viên từ chối hoặc đồng ý sản phẩm đăng lên )
 + Khi từ chối (cập nhật thêm status, và content trong feedback )
 ResponseBody
- "id": "2fab4118-0e53-41eb-82d6-28186a5cf70a",
-        "title": "Dự Án Java3",
-        "status": "NotAccess",
-        "isPublic": true,
-        "videoPath": "video3",
-        "sourcePath": "demoproject3",
-        "thumnail": "anhvideo3",
-        "major": "UDPM",
-        "description": {
-            "id": "a9e984e3-a93a-4be3-9081-0e0ba418f9bf",
-            "create_Date": "2023-07-24T00:00:00.000+00:00",
-            "approval_Date": null,
-            "github": "dong",
-            "viewCount": null,
-            "likeCount": null
-        },
-        "feedback": 
-        {
-            "content": "không phù hợp"
-        },
-        "userst": {
-            "id": "ffd86cda-b095-43c2-8fb7-a8530ee3db7b"
-   
-        },
-        "usercs": {
-            "id": "fa966579-e4c5-4eca-b343-bf276c8c5dfb"
-     
-        },
-        "techs": [
-            {
-                "id": "9251d965-a730-4ba2-926f-fd6d6b0deb1f",
-                "name": "Bootstrap"
-            },
-            {
-                "id": "ad63ed12-0026-4d0f-83f3-7320ac56b317",
-                "name": "Stringboot"
-            }
-        ]
-    }
-
-+ Khi đồng ý (cập nhất status, approval_Date)
-{
-{
+ {
         "id": "7efd347f-4999-4ff9-ac54-1edaad6ba5f9",
-        "title": "Dự Án Java1",
-        "status": "Access",
-        "isPublic": false,
-        "videoPath": "video1",
-        "sourcePath": "demoproject1",
-        "thumnail": "anhvideo1",
-        "major": "UDPM",
-        "description": {
-            "id": "c39ab700-b1b3-405d-a2be-982d4bbf75da",
-            "create_Date": "2023-07-24T00:00:00.000+00:00",
-            "approval_Date": "2023-07-29T00:00:00.000+00:00",
-            "github": "dong",
-            "viewCount": null,
-            "likeCount": null
-        },
-        "feedback": null,
-        "userst": {
-            "id": "ffd86cda-b095-43c2-8fb7-a8530ee3db7b"        
-        },
-        "usercs": {
-            "id": "fa966579-e4c5-4eca-b343-bf276c8c5dfb"
-                   },
-        "techs": [
-            {
-                "id": "9251d965-a730-4ba2-926f-fd6d6b0deb1f",
-                "name": "Bootstrap"
-            },
-            {
-                "id": "ad63ed12-0026-4d0f-83f3-7320ac56b317",
-                "name": "Stringboot"
-            }
-        ]
-    }
-}
+        "status": "NotAccess",
+        "content" : "Chưa phù họp"
 
+    }
+- Khi đồng ý
+{
+  "id": "7efd347f-4999-4ff9-ac54-1edaad6ba5f9",
+        "status": "NotAccess",
+        approval_Date: "2023-07-29T00:00:00.000+00:00"
+}
 - {{url}}/api/projects/updateisPulic (Cập nhật sự công khai hay không công khai của project đăng lên)
 +Responsebody
 {

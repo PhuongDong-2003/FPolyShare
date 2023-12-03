@@ -1,5 +1,6 @@
 package com.example.api.Service;
 
+import com.example.api.DTO.ReplyProject;
 import com.example.api.DTO.Request;
 import com.example.api.Entity.*;
 import com.example.api.Exception.AppException;
@@ -117,56 +118,27 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project UpdateProject(Project updatedProject) {
-        User usercs = null;
-        User userst = null;
-        Project existingProject = projectRepository.findById(updatedProject.getId()).orElse(null);
-        Optional<User> userc = userRepository.findById(updatedProject.getUsercs().getId());
-        Optional<User> users = userRepository.findById(updatedProject.getUserst().getId());
-        if (userc.isPresent() && users.isPresent()) {
-            usercs = userc.get();
-            userst = users.get();
-        } else {
-            usercs = null;
-            userst = null;
-        }
+    public Project UpdateProject(ReplyProject replyProject) {
 
-
-        if(updatedProject.getFeedback() !=null )
+        Project existingProject = projectRepository.findById(replyProject.getId()).orElse(null);
+        if(replyProject.getContent() !=null )
         {
 
 
-            if (existingProject != null && usercs != null  && usercs != null && userst != null) {
-                existingProject.setTitle(updatedProject.getTitle());
-                existingProject.setStatus(updatedProject.getStatus());
-                existingProject.setIsPublic(updatedProject.getIsPublic());
-                existingProject.setVideoPath(updatedProject.getVideoPath());
-                existingProject.setSourcePath(updatedProject.getSourcePath());
-                existingProject.setThumnail(updatedProject.getThumnail());
-                existingProject.setMajor(updatedProject.getMajor());
-                existingProject.setUsercs(usercs);
-                existingProject.setUserst(userst);
+            if (existingProject != null ) {
+
+                existingProject.setStatus(replyProject.getStatus());
 
                 Project projectResult = projectRepository.save(existingProject);
 
-                // Cập nhật feedback
-                FeedBack existingFeedback = existingProject.getFeedback();
-                FeedBack updatedFeedback = updatedProject.getFeedback();
 
-                if (existingFeedback != null && updatedFeedback != null) {
-                    existingFeedback.setContent(updatedFeedback.getContent());
-                    existingFeedback.setProjectfb(projectResult);
-                    feedBackRepository.save(existingFeedback);
-                } else if (updatedFeedback != null) {
                     // Nếu feedback chưa tồn tại, lưu mới
                     FeedBack newFeedback = new FeedBack();
-                    newFeedback.setContent(updatedFeedback.getContent());
+                    newFeedback.setContent(replyProject.getContent());
                     newFeedback.setProjectfb(projectResult);
                     existingProject.setFeedback(newFeedback);
                     feedBackRepository.save(newFeedback);
-                }
-
-                return projectResult;
+                    return projectResult;
             } else {
 
                 return null;
@@ -174,17 +146,11 @@ public class ProjectServiceImpl implements ProjectService {
         }
         else
         {
-            if (existingProject != null && usercs != null && userst != null) {
-                existingProject.setTitle(updatedProject.getTitle());
-                existingProject.setStatus(updatedProject.getStatus());
-                existingProject.setIsPublic(updatedProject.getIsPublic());
-                existingProject.setVideoPath(updatedProject.getVideoPath());
-                existingProject.setSourcePath(updatedProject.getSourcePath());
-                existingProject.setThumnail(updatedProject.getThumnail());
-                existingProject.setMajor(updatedProject.getMajor());
-                existingProject.getDescription().setApproval_Date(updatedProject.getDescription().getApproval_Date());
-                existingProject.setUsercs(usercs);
-                existingProject.setUserst(userst);
+            if (existingProject != null) {
+
+                existingProject.setStatus(replyProject.getStatus());
+                existingProject.getDescription().setApproval_Date(replyProject.getApproval_Date());
+
                 return projectRepository.save(existingProject);
             } else {
 

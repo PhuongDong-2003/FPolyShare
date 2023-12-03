@@ -1,5 +1,6 @@
 package com.example.api.Controller;
 
+import com.example.api.DTO.ReplyProject;
 import com.example.api.DTO.Request;
 import com.example.api.Entity.*;
 import com.example.api.Response.ApiResponse;
@@ -150,11 +151,11 @@ public class ProjectController {
     }
 
     @PutMapping(value ={"/replyProject"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<?>> UpdateAccessProject(@RequestBody Project project) {
+    public ResponseEntity<ApiResponse<?>> UpdateAccessProject(@RequestBody ReplyProject replyProject) {
 
-        Project projectresult = projectServiceImpl.UpdateProject(project);
+        Project projectresult = projectServiceImpl.UpdateProject(replyProject);
 
-        if (project != null) {
+        if (replyProject != null) {
             return ResponseEntity.ok(new ApiResponse<Project>("Cập nhật sản phẩm thành công", projectresult));
         } else {
             return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Cập nhật phẩm không thành công", new ResponseError("Sản phẩm chưa được cập nhật")));

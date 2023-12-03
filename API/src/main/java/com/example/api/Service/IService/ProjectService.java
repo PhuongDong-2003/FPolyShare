@@ -1,5 +1,6 @@
 package com.example.api.Service.IService;
 
+import com.example.api.DTO.ReplyProject;
 import com.example.api.DTO.Request;
 import com.example.api.Entity.*;
 
@@ -23,7 +24,7 @@ public interface ProjectService {
 
     public Project CreateProject(Project project);
 
-    public Project UpdateProject(Project updatedProject);
+    public Project UpdateProject(ReplyProject replyProject);
 
 //    public Project UpdateProjectNotAccess(Project updatedProject);
 
