@@ -26,8 +26,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public Project getSProjectById(UUID id) {
-        return projectRepository.findById(id).orElse(null);
+    public Project getProjectById(String id) {
+        return projectRepository.findById(UUID.fromString(id)).orElse(null);
     }
 
     @Override
@@ -36,18 +36,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<String> getAlTechName() {
+    public List<Tech> getAlTechName() {
         return  techRepository.getAlTechName();
     }
 
-    @Override
-    public List<Project> findProjectsAC_UserId(UUID userId) {
-        return projectRepository.findByProjectAC_UserId(userId);
-    }
 
     @Override
-    public List<Project> findByProject_UserId(UUID userId) {
-        return projectRepository.findByProject_UserId(userId);
+    public List<Project> findByProject_UserId(String userId, String status) {
+        return projectRepository.findByProject_UserId(UUID.fromString(userId), status);
     }
 
     @Override
@@ -56,18 +52,18 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<Project> FindByProjectWait(UUID id) {
-        return projectRepository.findByProjectWait(id);
+    public List<Project> FindByProjectWait(String id) {
+        return projectRepository.findByProjectCensor(UUID.fromString(id));
     }
 
     @Override
-    public List<Project> FindByProjectProcessed(UUID id) {
-        return projectRepository.findByProjectProcessed(id);
+    public List<Project> FindByProjectProcessed(String id) {
+        return projectRepository.findByProjectCensorAccess(UUID.fromString(id));
     }
 
     @Override
-    public FeedBack FindByFeedBackProjectID(UUID projectID) {
-        return feedBackRepository.FindByFeedBackProjectID(projectID);
+    public FeedBack FindByFeedBackProjectID(String projectID) {
+        return feedBackRepository.FindByFeedBackProjectID(UUID.fromString(projectID));
     }
 
 
@@ -75,18 +71,13 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     @Override
-    public Project getProjectDetailsById(UUID projectId) {
+    public void getProjectDetailsById(String projectId) {
 
+         projectRepository.deleteById(UUID.fromString(projectId));
 
-        Optional<Project> projectOptional = projectRepository.findById(projectId);
-
-        if (projectOptional.isPresent()) {
-            Project project = projectOptional.get();
-            return project;
-        } else {
-            return null;
-        }
     }
+
+
 
     @Override
     public Project CreateProject(Project project) {
@@ -98,16 +89,21 @@ public class ProjectServiceImpl implements ProjectService {
         for (Tech tech : project.getTechs()) {
             Tech existingTech = techRepository.findTechByName(tech.getName()).orElse(null);
             if (existingTech != null) {
-                // Tech đã tồn tại, thêm vào danh sách để lưu
+
                 techsToSave.add(existingTech);
             } else {
-                // Tech chưa tồn tại, lưu mới và thêm vào danh sách để lưu
+
                 techRepository.save(tech);
                 techsToSave.add(tech);
             }
         }
+        User usercs = userRepository.findById(project.getUsercs().getId()).orElse(null);
 
+        User userst = userRepository.findById(project.getUserst().getId()).orElse(null);
         project.setTechs(techsToSave);
+        project.setUsercs(usercs);
+        project.setUserst(userst);
+
         Project savedProject = projectRepository.save(project);
 
         // Lưu project ID vào description nếu có
@@ -121,79 +117,81 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Project UpdateProjectAccess(Project updatedProject) {
-        // Lấy project cần cập nhật từ cơ sở dữ liệu
-        User user = null;
+    public Project UpdateProject(Project updatedProject) {
+        User usercs = null;
+        User userst = null;
         Project existingProject = projectRepository.findById(updatedProject.getId()).orElse(null);
-        Optional<User> usercs = userRepository.findById(updatedProject.getUsercs().getId());
-        if (usercs.isPresent()) {
-            user = usercs.get();
+        Optional<User> userc = userRepository.findById(updatedProject.getUsercs().getId());
+        Optional<User> users = userRepository.findById(updatedProject.getUserst().getId());
+        if (userc.isPresent() && users.isPresent()) {
+            usercs = userc.get();
+            userst = users.get();
         } else {
-            user = null;
+            usercs = null;
+            userst = null;
         }
-        if (existingProject != null && user != null) {
-            existingProject.setTitle(updatedProject.getTitle());
-            existingProject.setStatus(updatedProject.getStatus());
-            existingProject.setIsPublic(updatedProject.getIsPublic());
-            existingProject.setVideoPath(updatedProject.getVideoPath());
-            existingProject.setSourcePath(updatedProject.getSourcePath());
-            existingProject.setThumnail(updatedProject.getThumnail());
-            existingProject.setMajor(updatedProject.getMajor());
-            existingProject.getDescription().setApproval_Date(updatedProject.getDescription().getApproval_Date());
-            existingProject.setUsercs(user);
-            return projectRepository.save(existingProject);
-        } else {
 
-            return null;
-        }
-    }
 
-    @Override
-    public Project UpdateProjectNotAccess(Project updatedProject) {
-        Project existingProject = projectRepository.findById(updatedProject.getId()).orElse(null);
-        User user = null;
-        Optional<User> usercs = userRepository.findById(updatedProject.getUsercs().getId());
-        if (usercs.isPresent()) {
-            user = usercs.get();
-        } else {
-            user = null;
-        }
-        if (existingProject != null && user != null) {
-            // Cập nhật thông tin từ updatedProject vào existingProject
-            existingProject.setTitle(updatedProject.getTitle());
-            existingProject.setStatus(updatedProject.getStatus());
-            existingProject.setIsPublic(updatedProject.getIsPublic());
-            existingProject.setVideoPath(updatedProject.getVideoPath());
-            existingProject.setSourcePath(updatedProject.getSourcePath());
-            existingProject.setThumnail(updatedProject.getThumnail());
-            existingProject.setMajor(updatedProject.getMajor());
-            existingProject.setUsercs(user);
+        if(updatedProject.getFeedback() !=null )
+        {
 
-            Project projectResult = projectRepository.save(existingProject);
 
-            // Cập nhật feedback
-            FeedBack existingFeedback = existingProject.getFeedback();
-            FeedBack updatedFeedback = updatedProject.getFeedback();
+            if (existingProject != null && usercs != null  && usercs != null && userst != null) {
+                existingProject.setTitle(updatedProject.getTitle());
+                existingProject.setStatus(updatedProject.getStatus());
+                existingProject.setIsPublic(updatedProject.getIsPublic());
+                existingProject.setVideoPath(updatedProject.getVideoPath());
+                existingProject.setSourcePath(updatedProject.getSourcePath());
+                existingProject.setThumnail(updatedProject.getThumnail());
+                existingProject.setMajor(updatedProject.getMajor());
+                existingProject.setUsercs(usercs);
+                existingProject.setUserst(userst);
 
-            if (existingFeedback != null && updatedFeedback != null) {
-                existingFeedback.setContent(updatedFeedback.getContent());
-                existingFeedback.setProjectfb(projectResult);
-                feedBackRepository.save(existingFeedback);
-            } else if (updatedFeedback != null) {
-                // Nếu feedback chưa tồn tại, lưu mới
-                FeedBack newFeedback = new FeedBack();
-                newFeedback.setContent(updatedFeedback.getContent());
-                newFeedback.setProjectfb(projectResult);
-                existingProject.setFeedback(newFeedback);
-                feedBackRepository.save(newFeedback);
+                Project projectResult = projectRepository.save(existingProject);
+
+                // Cập nhật feedback
+                FeedBack existingFeedback = existingProject.getFeedback();
+                FeedBack updatedFeedback = updatedProject.getFeedback();
+
+                if (existingFeedback != null && updatedFeedback != null) {
+                    existingFeedback.setContent(updatedFeedback.getContent());
+                    existingFeedback.setProjectfb(projectResult);
+                    feedBackRepository.save(existingFeedback);
+                } else if (updatedFeedback != null) {
+                    // Nếu feedback chưa tồn tại, lưu mới
+                    FeedBack newFeedback = new FeedBack();
+                    newFeedback.setContent(updatedFeedback.getContent());
+                    newFeedback.setProjectfb(projectResult);
+                    existingProject.setFeedback(newFeedback);
+                    feedBackRepository.save(newFeedback);
+                }
+
+                return projectResult;
+            } else {
+
+                return null;
             }
-
-            return projectResult;
-        } else {
-
-            return null;
         }
-    }
+        else
+        {
+            if (existingProject != null && usercs != null && userst != null) {
+                existingProject.setTitle(updatedProject.getTitle());
+                existingProject.setStatus(updatedProject.getStatus());
+                existingProject.setIsPublic(updatedProject.getIsPublic());
+                existingProject.setVideoPath(updatedProject.getVideoPath());
+                existingProject.setSourcePath(updatedProject.getSourcePath());
+                existingProject.setThumnail(updatedProject.getThumnail());
+                existingProject.setMajor(updatedProject.getMajor());
+                existingProject.getDescription().setApproval_Date(updatedProject.getDescription().getApproval_Date());
+                existingProject.setUsercs(usercs);
+                existingProject.setUserst(userst);
+                return projectRepository.save(existingProject);
+            } else {
+
+                return null;
+            }
+        }
+        }
     @Override
     public Project updateIsPublic(Request request) {
         Project project = projectRepository.findById(request.getId())
@@ -203,6 +201,54 @@ public class ProjectServiceImpl implements ProjectService {
 
         return projectRepository.save(project);
     }
+
+//    @Override
+//    public Project UpdateProjectNotAccess(Project updatedProject) {
+//        Project existingProject = projectRepository.findById(updatedProject.getId()).orElse(null);
+//        User user = null;
+//        Optional<User> usercs = userRepository.findById(updatedProject.getUsercs().getId());
+//        if (usercs.isPresent()) {
+//            user = usercs.get();
+//        } else {
+//            user = null;
+//        }
+//        if (existingProject != null && user != null) {
+//            // Cập nhật thông tin từ updatedProject vào existingProject
+//            existingProject.setTitle(updatedProject.getTitle());
+//            existingProject.setStatus(updatedProject.getStatus());
+//            existingProject.setIsPublic(updatedProject.getIsPublic());
+//            existingProject.setVideoPath(updatedProject.getVideoPath());
+//            existingProject.setSourcePath(updatedProject.getSourcePath());
+//            existingProject.setThumnail(updatedProject.getThumnail());
+//            existingProject.setMajor(updatedProject.getMajor());
+//            existingProject.setUsercs(user);
+//
+//            Project projectResult = projectRepository.save(existingProject);
+//
+//            // Cập nhật feedback
+//            FeedBack existingFeedback = existingProject.getFeedback();
+//            FeedBack updatedFeedback = updatedProject.getFeedback();
+//
+//            if (existingFeedback != null && updatedFeedback != null) {
+//                existingFeedback.setContent(updatedFeedback.getContent());
+//                existingFeedback.setProjectfb(projectResult);
+//                feedBackRepository.save(existingFeedback);
+//            } else if (updatedFeedback != null) {
+//                // Nếu feedback chưa tồn tại, lưu mới
+//                FeedBack newFeedback = new FeedBack();
+//                newFeedback.setContent(updatedFeedback.getContent());
+//                newFeedback.setProjectfb(projectResult);
+//                existingProject.setFeedback(newFeedback);
+//                feedBackRepository.save(newFeedback);
+//            }
+//
+//            return projectResult;
+//        } else {
+//
+//            return null;
+//        }
+//    }
+
 
 //    private void saveTechs(Project project, Collection<Tech> techs) {
 //        if (techs != null && !techs.isEmpty()) {

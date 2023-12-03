@@ -14,7 +14,7 @@ import java.util.UUID;
 @Repository
 public interface TechRepository extends JpaRepository<Tech, UUID> {
 
-    @Query("Select t.name from Tech t")
-    List<String> getAlTechName();
+    @Query("Select t from Tech t")
+    List<Tech> getAlTechName();
     Optional<Tech> findTechByName(String name);
 }

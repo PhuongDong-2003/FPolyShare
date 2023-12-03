@@ -1,0 +1,159 @@
+- {{url}}/api/projects (Trả về tất cả project với isPublic bằng true và status đã được Access) sử dụng cho trang chủ
+
+- {{url}}/api/projects/getById (Trả về một project với id được gửi từ resquestparam ) sử dụng  khi click vào xem chi tiết một video
+
+-{{url}}/api/projects/projectUser (Trả tất cả project của user hoạt động có trạng thái là Access  hoặc tất cả project được tạo )
++ ResquetParam gồm có userId và status
++ Khi truyền status là null thì bao gồm tất cả các project của user đã tạo và Status là Acess là những project hoạt động
+
+- {{url}}/api/projects/bykeyword (Tìm kiếm theo title và công nghệ sử dụng được gửi từ resqusetparam) 
+
+- {{url}}/api/projects/ProjectWait (Trả về danh sách có project chờ duyệt của theo id của  giảng viên từ resquestparam gửi đến)
+
+- {{url}}/api/projects/ProjectProcessed (Trả về danh sách có project đã duyệt của theo id của  giảng viên từ resquestparam gửi đến)
+
+-{{url}}/api/projects/byfeedBackProjectId (Trả về nội dung feedback theo id của project từ resquestparam gửi đến )
+
+- {{url}}/api/projects/getTechName (Trả về danh sách các công nghệ sử dụng cho project phục vụ cho việc tạo project)
+
+- {{url}}/api/users/getAllMajor (Trả về danh sách các chuyên ngành phục vụ cho việc tạo project)
+
+- {{url}}/api/users/findByMarjor (Trả về danh sách giảng viên theo chuyên ngành từ resquestparam gửi đến  khi tạo project )
+
+- {{url}}/api/projects/createproject (Tạo project)
++ ResponseBody
+ "title": "Dự Án Java3",
+            "status": null,
+            "isPublic":true,
+            "videoPath": "video3",
+            "sourcePath": "demoproject3",
+            "thumnail": "anhvideo3",
+            "major": "UDPM",
+            "description":
+            {
+                    "like_Count": 1,
+                    "view_Count": 2,
+                    "create_Date": "2023-07-24 ",
+                    "approval_Date": null,
+                    "github": "dong"
+
+            },
+            
+            "feedback": null,
+            "usercs" : {
+                
+                "id": "FA966579-E4C5-4ECA-B343-BF276C8C5DFB"             
+                
+            },
+            "userst": {
+                "id": "FFD86CDA-B095-43C2-8FB7-A8530EE3DB7B"
+
+            },
+                        
+            "techs": [  
+
+                {
+                   
+                    "name": "Bootstrap"
+
+                },
+                {
+                        
+                      "name": "Stringboot"
+                }
+                  
+            ]
+            
+        }
+
+- {{{url}}/api/projects/replyProject (Giảng viên từ chối hoặc đồng ý sản phẩm đăng lên )
++ Khi từ chối (cập nhật thêm status, và content trong feedback )
+ResponseBody
+ "id": "2fab4118-0e53-41eb-82d6-28186a5cf70a",
+        "title": "Dự Án Java3",
+        "status": "NotAccess",
+        "isPublic": true,
+        "videoPath": "video3",
+        "sourcePath": "demoproject3",
+        "thumnail": "anhvideo3",
+        "major": "UDPM",
+        "description": {
+            "id": "a9e984e3-a93a-4be3-9081-0e0ba418f9bf",
+            "create_Date": "2023-07-24T00:00:00.000+00:00",
+            "approval_Date": null,
+            "github": "dong",
+            "viewCount": null,
+            "likeCount": null
+        },
+        "feedback": 
+        {
+            "content": "không phù hợp"
+        },
+        "userst": {
+            "id": "ffd86cda-b095-43c2-8fb7-a8530ee3db7b"
+   
+        },
+        "usercs": {
+            "id": "fa966579-e4c5-4eca-b343-bf276c8c5dfb"
+     
+        },
+        "techs": [
+            {
+                "id": "9251d965-a730-4ba2-926f-fd6d6b0deb1f",
+                "name": "Bootstrap"
+            },
+            {
+                "id": "ad63ed12-0026-4d0f-83f3-7320ac56b317",
+                "name": "Stringboot"
+            }
+        ]
+    }
+
++ Khi đồng ý (cập nhất status, approval_Date)
+{
+{
+        "id": "7efd347f-4999-4ff9-ac54-1edaad6ba5f9",
+        "title": "Dự Án Java1",
+        "status": "Access",
+        "isPublic": false,
+        "videoPath": "video1",
+        "sourcePath": "demoproject1",
+        "thumnail": "anhvideo1",
+        "major": "UDPM",
+        "description": {
+            "id": "c39ab700-b1b3-405d-a2be-982d4bbf75da",
+            "create_Date": "2023-07-24T00:00:00.000+00:00",
+            "approval_Date": "2023-07-29T00:00:00.000+00:00",
+            "github": "dong",
+            "viewCount": null,
+            "likeCount": null
+        },
+        "feedback": null,
+        "userst": {
+            "id": "ffd86cda-b095-43c2-8fb7-a8530ee3db7b"        
+        },
+        "usercs": {
+            "id": "fa966579-e4c5-4eca-b343-bf276c8c5dfb"
+                   },
+        "techs": [
+            {
+                "id": "9251d965-a730-4ba2-926f-fd6d6b0deb1f",
+                "name": "Bootstrap"
+            },
+            {
+                "id": "ad63ed12-0026-4d0f-83f3-7320ac56b317",
+                "name": "Stringboot"
+            }
+        ]
+    }
+}
+
+- {{url}}/api/projects/updateisPulic (Cập nhật sự công khai hay không công khai của project đăng lên)
++Responsebody
+{
+    "id" : "7EFD347F-4999-4FF9-AC54-1EDAAD6BA5F9",
+    "isPublic": false
+
+} 
+
+-{{url}}/api/projects/deletedporject (Xóa sản phẩm theo id từ resquesparam gửi đến)

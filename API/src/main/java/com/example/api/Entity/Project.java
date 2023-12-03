@@ -26,7 +26,7 @@ public class Project {
     @Column(name = "title", columnDefinition = "nvarchar(255)", nullable = false)
     private String title;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private String status;
 
     @Column(name = "isPublic", nullable = false)

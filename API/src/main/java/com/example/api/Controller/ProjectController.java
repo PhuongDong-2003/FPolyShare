@@ -32,27 +32,27 @@ public class ProjectController {
         else
         {
 
-            return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Tải không project thành công", new ResponseError("Không có project nào")));
+            return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Tải  project không thành công", new ResponseError("Không có project nào")));
         }
     }
-    @GetMapping("/{projectId}")
-    public ResponseEntity<ApiResponse<?>> getProjectById(@PathVariable UUID projectId) {
-        Project project = projectServiceImpl.getProjectDetailsById(projectId);
+    @GetMapping("/getById")
+    public ResponseEntity<ApiResponse<?>> getProjectById(@RequestParam String projectId) {
+        Project project = projectServiceImpl.getProjectById(projectId);
         if(project !=null)
         {
-            return ResponseEntity.ok(new ApiResponse<Project>("Tìm kiếm thành công", project));
+            return ResponseEntity.ok(new ApiResponse<Project>("Tải project thành công", project));
         }
         else
         {
 
-            return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Tìm kiếm thất bại", new ResponseError("Không có project nào có id "+projectId)));
+            return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Tải  project không thành công", new ResponseError("Không có project nào có id "+projectId)));
         }
 
     }
 
-    @GetMapping(value ={"/projectAcbyUsercs/{userId}"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<?>> GetProjectsAcByUsercsId(@PathVariable UUID userId) {
-        List<Project> projects = projectServiceImpl.findProjectsAC_UserId(userId);
+    @GetMapping(value ={"/projectUser"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<?>> GetProjectsAcByUsercsId(@RequestParam String userId, @RequestParam String status) {
+        List<Project> projects = projectServiceImpl.findByProject_UserId(userId, status);
         if(!projects.isEmpty())
         {
             return ResponseEntity.ok(new ApiResponse<List<Project>>("Tải project thành công", projects));
@@ -64,22 +64,9 @@ public class ProjectController {
         }
     }
 
-    @GetMapping(value ={"/projectbyUsercs/{userId}"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<?>> GetProjectsbyUsercs(@PathVariable UUID userId) {
-        List<Project> projects = projectServiceImpl.findByProject_UserId(userId);
-        if (userId != null ) {
-            return ResponseEntity.ok(new ApiResponse<List<Project>>("Tìm kiếm project thành công", projects));
-        }
-        else
-        {
 
-            return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Tìm không project thành công", new ResponseError("Không có project nào có userId "+userId)));
-        }
-
-    }
-
-    @GetMapping(value ={"/bykeyword/{keyWord}"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<?>> FindByKeyWord(@PathVariable String keyWord) {
+    @GetMapping(value ={"/bykeyword"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<?>> FindByKeyWord(@RequestParam String keyWord) {
         List<Project> projects = projectServiceImpl.findByKeyWord(keyWord);
         if (keyWord != null  && !keyWord.isEmpty() ) {
             return ResponseEntity.ok(new ApiResponse<List<Project>>("Tìm kiếm thành công", projects));
@@ -92,8 +79,8 @@ public class ProjectController {
 
     }
 
-    @GetMapping(value ={"/ProjectWait/{userId}"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<?>> FindByProjectWait(@PathVariable UUID userId) {
+    @GetMapping(value ={"/ProjectWait"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<?>> FindByProjectWait(@RequestParam String userId) {
         List<Project > projects = projectServiceImpl.FindByProjectWait(userId);
         if (userId !=null ) {
             return ResponseEntity.ok(new ApiResponse<List<Project>>("Tìm kiếm thành công", projects));
@@ -106,8 +93,8 @@ public class ProjectController {
 
     }
 
-    @GetMapping(value ={"/ProjectProcessed/{userId}"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<?>> FindByProjectProcessed(@PathVariable UUID userId) {
+    @GetMapping(value ={"/ProjectProcessed"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ApiResponse<?>> FindByProjectProcessed(@RequestParam String userId) {
         List<Project > projects = projectServiceImpl.FindByProjectProcessed(userId);
         if (userId !=null ) {
             return ResponseEntity.ok(new ApiResponse<List<Project>>("Tìm kiếm thành công", projects));
@@ -120,8 +107,8 @@ public class ProjectController {
 
     }
 
-    @GetMapping("/byfeedBackProjectId/{projectId}")
-    public ResponseEntity<ApiResponse<?>> GetByFeeback(@PathVariable UUID projectId) {
+    @GetMapping("/byfeedBackProjectId")
+    public ResponseEntity<ApiResponse<?>> GetByFeeback(@RequestParam String projectId) {
         FeedBack feedBack = projectServiceImpl.FindByFeedBackProjectID(projectId);
         if(feedBack !=null)
         {
@@ -137,10 +124,10 @@ public class ProjectController {
 
     @GetMapping("/getTechName")
     public ResponseEntity<ApiResponse<?>> GetTechName() {
-        List<String> tech = projectServiceImpl.getAlTechName();
+        List<Tech> tech = projectServiceImpl.getAlTechName();
         if(tech !=null)
         {
-            return ResponseEntity.ok(new ApiResponse<List<String>>("Load dữ liệu thành công", tech));
+            return ResponseEntity.ok(new ApiResponse<List<Tech>>("Load dữ liệu thành công", tech));
         }
         else
         {
@@ -162,10 +149,10 @@ public class ProjectController {
 
     }
 
-    @PutMapping(value ={"/updateAccessproject"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value ={"/replyProject"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> UpdateAccessProject(@RequestBody Project project) {
 
-        Project projectresult = projectServiceImpl.UpdateProjectAccess(project);
+        Project projectresult = projectServiceImpl.UpdateProject(project);
 
         if (project != null) {
             return ResponseEntity.ok(new ApiResponse<Project>("Cập nhật sản phẩm thành công", projectresult));
@@ -175,18 +162,6 @@ public class ProjectController {
 
     }
 
-    @PutMapping(value ={"/updateNotAccessproject"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ApiResponse<?>> UpdateNotAccessProject(@RequestBody Project project) {
-
-        Project projectresult = projectServiceImpl.UpdateProjectNotAccess(project);
-
-        if (project != null) {
-            return ResponseEntity.ok(new ApiResponse<Project>("Cập nhật sản phẩm thành công", projectresult));
-        } else {
-            return ResponseEntity.badRequest().body(new ApiResponse<ResponseError>("Cập nhật phẩm không thành công", new ResponseError("Sản phẩm chưa được cập nhật")));
-        }
-
-    }
 
     @PutMapping(value ={"/updateisPulic"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> UpdateisPublicProject(@RequestBody Request request) {
@@ -200,9 +175,8 @@ public class ProjectController {
         }
 
     }
-
-    @DeleteMapping(value ={"/deletedporject/{projectId}"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Project> DeleteProject(@PathVariable UUID projectId) {
+    @DeleteMapping(value ={"/deletedporject"},consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Project> DeleteProject(@RequestParam String projectId) {
        projectServiceImpl.getProjectDetailsById(projectId);
        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
