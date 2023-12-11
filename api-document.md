@@ -1,5 +1,73 @@
 > _Token được trả về (lưu localStorage) khi người dùng đăng nhập, bất cứ hoạt động liên quan tới thông tin người dùng cần truyền token lên để xác thực. Parse Token sẽ lấy được thông tin người dùng_
 
+## Format data trả về
+
+#### Là một object có dạng
+
+```ts
+{
+  message: string
+  data?: any
+}
+```
+
+#### Ví dụ
+
+```json
+{
+  "mesgae": "Lấy dự án thành công",
+  "data": {
+    "id": "f6c06ca1-bae8-4cc6-98c4-62fe0955367a",
+    "title": "Java 6 | Spring Boot - Chức năng giỏ hàng",
+    "status": "APPROVE",
+    "public": true,
+    "video": "{url}",
+    "source": "{url}",
+    "thumbnail": "{url}",
+    "major": "Ứng dụng phần mềm",
+    "student": {
+      "id": "ed31f981-33ef-4a9b-969d-65c5a01b425d",
+      "email": "dongnpps24660@fpt.edu.vn",
+      "fullname": "Nguyễn Phương Đông",
+      "avatar": "{url}"
+    },
+    "description": {
+      "create_at": "2023-07-24T00:00:00.000+00:00",
+      "approve_at": "2023-07-25T00:00:00.000+00:00",
+      "censor": "Nguyễn Thanh Phước",
+      "techs": ["Java", "Spring Boot", "ReactJS"]
+      "github": "https://github.com/PhuongDong-2003/FPolyShare",
+      "like": 1000,
+      "view": 2000
+    }
+  }
+}
+```
+> Còn nhiều kiểu trả về khác
+
+## Format lỗi trả về
+
+#### Lỗi liên quan đến form (422)
+
+```json
+{
+  "message": "Lỗi",
+  "data": {
+    "email": "Email đăng nhập không chính xác",
+    "password": "Password không chính xác",
+    "...": "..."
+  }
+}
+```
+
+#### Các lỗi còn lại (400, 401, 404, ...)
+
+```json
+{
+  "message": "Lỗi do (cái gì đó)"
+}
+```
+
 ## Login `/api/login`
 
 Method: `POST`
@@ -169,8 +237,9 @@ Method: `GET`
 
 Method: `GET`
 
-Query Params: 
- - `major`: Chuyên ngành của người dùng trong phiên đăng nhập hiện tại
+Query Params:
+
+- `major`: Chuyên ngành của người dùng trong phiên đăng nhập hiện tại
 
 ## Tạo Feedback `/api/feedbacks`
 
@@ -209,7 +278,8 @@ Header:
 
 Method: `POST`
 
-Body: 
+Body:
+
 ```json
 {
   ...
