@@ -50,7 +50,6 @@ public class FeedBackServiceImpl implements FeedBackService {
         {
             if (existingProject != null) {
                 Date currentDate = new Date();
-                existingProject.setStatus("DENIED");
                 existingProject.setStatus("APPROVE");
                 existingProject.getDescription().setApprovalDate(currentDate);
                 projectRepository.save(existingProject);

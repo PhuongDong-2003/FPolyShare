@@ -160,7 +160,7 @@ public class ProjectController {
     public ResponseEntity FindByKeyWord(@RequestParam Date date) {
         Integer count = projectServiceImpl.CountProject(date);
         if (date != null   ) {
-            return ResponseEntity.ok("Tải thàn công");
+            return ResponseEntity.ok("Tải thành công");
         }
         else
         {
