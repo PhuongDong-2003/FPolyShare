@@ -102,7 +102,7 @@ public class UserController {
         }
 
 
-    @GetMapping(value ={"/findByMarjor"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value ={"/censors"}, consumes = MediaType.ALL_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> FindByMajor(@RequestParam String major) {
         List<User> users = userService.findByMajorWithRole(major);
         if(!users.isEmpty())

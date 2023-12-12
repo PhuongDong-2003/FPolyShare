@@ -1,18 +1,22 @@
 package com.example.api.Service;
 
+import com.example.api.DTO.AuthDTO;
+import com.example.api.DTO.UserResponseDTO;
 import com.example.api.Entity.Role;
 import com.example.api.Entity.User;
 
 //import com.example.api.Entity.User_Role;
-import com.example.api.Exception.AppException;
+import com.example.api.Entity.ValidToken;
+import com.example.api.Exception.*;
 
-import com.example.api.Exception.UserAlreadyExistException;
-import com.example.api.Exception.UserNotFoundException;
 import com.example.api.Repository.RoleRepository;
 import com.example.api.Repository.UserRepository;
 //import com.example.api.Repository.User_RoleRepository;
 
+import com.example.api.Repository.ValidTokenRepository;
+import com.example.api.Security.JwtGenerator;
 import com.example.api.Service.IService.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,12 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private JwtGenerator jwtGenerator;
+
+    @Autowired
+    ValidTokenRepository validTokenRepository;
 
 
     @Override
@@ -60,8 +70,8 @@ public class UserServiceImpl implements UserService {
         if(checkUser.isPresent()){
             throw new UserAlreadyExistException(user.getUsername() + "User already exist");
         }
-        Role role =roleRepository.findByName("Student").get();
-        user.setRoles(Collections.singletonList(role));
+        Role role =roleRepository.findByName("STUDENT").get();
+//        user.setRoles();
         return userRepository.save(user);
 
 
@@ -114,6 +124,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(name).get();
     }
 
+
+
     @Override
     public Collection<Role> getUserRoles(UUID userId) {
         User user = userRepository.findById(userId).orElse(null);
@@ -129,6 +141,46 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("No users found with major: " + major);
         }
         return users;
+    }
+
+    public UserResponseDTO login(AuthDTO authDTO) throws AuthException {
+        Optional<User> optional = userRepository.findUserByEmail(authDTO.getEmail());
+
+        if (optional.isPresent()) {
+            User user = optional.get();
+            if (authDTO.getPassword().equals(user.getPassword())) {
+                ValidToken validToken = ValidToken
+                        .builder()
+                        .user(user)
+                        .token(jwtGenerator.generateToken(user.getEmail()))
+                        .createAt(new Date())
+                        .build();
+                ValidToken savedToken = validTokenRepository.save(validToken);
+                return UserResponseDTO
+                        .builder()
+                        .access_token("Bearer " + savedToken.getToken())
+                        .user(user)
+                        .build();
+            } else {
+                Map<String, String> mapError = new HashMap<>();
+                mapError.put("password", "Password không chính xác");
+                throw new AuthException(mapError);
+            }
+        } else {
+            Map<String, String> mapError = new HashMap<>();
+            mapError.put("email", "Email không chính xác");
+            throw new AuthException(mapError);
+        }
+    }
+    public void logout(String email) throws NotFoundException {
+        Optional<User> userOptional = userRepository.findUserByEmail(email);
+
+        if (userOptional.isEmpty()) {
+            throw new NotFoundException("Người dùng chưa được xác thực");
+        } else {
+            User user = userOptional.get();
+            validTokenRepository.deleteTokenByUserId(user.getId());
+        }
     }
 
 }

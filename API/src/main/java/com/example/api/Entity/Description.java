@@ -2,15 +2,14 @@ package com.example.api.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Description")
@@ -21,20 +20,21 @@ public class Description {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "creatDate", nullable = false)
-    private Date create_Date;
+    @Column(name= "create_date",nullable = false)
 
-    @Column(name = "approvalDate")
-    private Date approval_Date;
+    private Date createDate;
+
+    @Column(name= "approval_date")
+    private Date approvalDate;
 
     @Column(name = "github")
     private String github;
 
     @Column(name = "viewCount")
-    private Integer viewCount;
+    private Integer viewCount =0;
 
     @Column(name = "likeCount")
-    private Integer likeCount;
+    private Integer likeCount=0;
 
     @JsonIgnore
     @OneToOne

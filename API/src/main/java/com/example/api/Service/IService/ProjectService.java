@@ -1,40 +1,38 @@
 package com.example.api.Service.IService;
 
-import com.example.api.DTO.ReplyProject;
-import com.example.api.DTO.Request;
+import com.example.api.DTO.ProjectDTO;
+import com.example.api.DTO.RequestDTO;
+import com.example.api.DTO.UpdateProjectDTO;
 import com.example.api.Entity.*;
+import org.springframework.data.repository.query.Param;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 public interface ProjectService {
 
 
-    public Project getProjectById(String id);
-
-    List<Project> getAllProjects();
-
-    List<Tech> getAlTechName();
+    public ProjectDTO getProjectById(String id);
+    List<ProjectDTO> getAllProjects();
 
     public void getProjectDetailsById(String projectId);
-    List<Project> findByProject_UserId( String userId,String status);
+    List<ProjectDTO> findByProject_UserId( String status);
 
-    List<Project> findByKeyWord( String keyWord);
+    List<ProjectDTO> findByProject( );
+
+    List<ProjectDTO> findByKeyWord( String keyWord);
 
     public Project CreateProject(Project project);
 
-    public Project UpdateProject(ReplyProject replyProject);
+    public ProjectDTO UpdateProject(UpdateProjectDTO updateProjectDTO);
+    public List<ProjectDTO> FindByProjectCensor();
 
-//    public Project UpdateProjectNotAccess(Project updatedProject);
+    ProjectDTO updateIsPublic(RequestDTO requestDTO);
 
-    public List<Project> FindByProjectWait(String id);
+    public Integer CountProject(@Param("date") Date date);
 
-    public List<Project> FindByProjectProcessed(String id);
+    public  List<Project> TopProjectWithView();
 
-    public FeedBack FindByFeedBackProjectID( String projectID);
-
-    Project updateIsPublic(Request request);
 //    public void DeleteProjectId(UUID projectID);
 //
 //    public FeedBack CreateFeedback( FeedBackDTO feedBackDTO);

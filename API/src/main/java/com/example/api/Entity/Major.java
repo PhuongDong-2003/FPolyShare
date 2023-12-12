@@ -6,24 +6,24 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Feedback")
-public class FeedBack {
+@Table(name = "Major")
+public class Major {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "content",columnDefinition = "nvarchar(255)", nullable = false)
-    private String content;
+    @Column(name = "name", columnDefinition = "nvarchar(255)")
+    private  String name;
 
+    @OneToMany(mappedBy = "major",cascade = CascadeType.ALL, orphanRemoval = true )
     @JsonIgnore
-    @OneToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+    private List<User> users;
 }

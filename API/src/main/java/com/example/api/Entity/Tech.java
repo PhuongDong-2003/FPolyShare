@@ -27,7 +27,7 @@ public class Tech {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "techs")
-    private Collection<Project> projects = new HashSet<>();
+    private Set<Project> projects = new HashSet<>();
 
 
 }

@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 @Repository
 public interface FeedBackRepository extends JpaRepository<FeedBack, UUID> {
-    @Query("Select f from FeedBack  f where f.projectfb.id = :projectID")
+    @Query("Select f from FeedBack  f where f.project.id = :projectID")
     FeedBack  FindByFeedBackProjectID(@Param("projectID") UUID projectID);
+
+    FeedBack save(FeedBack feedBack);
 }

@@ -2,19 +2,15 @@ package com.example.api.Entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Table(name = "Project")
 public class Project {
 
@@ -41,27 +37,24 @@ public class Project {
     @Column(name = "thumnail", nullable = false)
     private String thumnail;
 
-    @Column(name = "major", columnDefinition = "nvarchar(255)", nullable = false)
-    private String major;
-
     @OneToOne(mappedBy = "projectds",cascade = CascadeType.ALL)
     private Description description;
 
-    @OneToOne(mappedBy = "projectfb",cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "project",cascade = CascadeType.ALL)
     private FeedBack feedback;
 
     @ManyToOne
     @JoinColumn(name = "student_id")
-    private User userst;
+    private User student;
 
     @ManyToOne
     @JoinColumn(name = "censor_id")
-    private User usercs;
+    private User censor;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(name = "tech_project", joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tech_id", referencedColumnName = "id"))
-    private Collection<Tech> techs = new HashSet<>();
+    private Set<Tech> techs = new HashSet<>();
 
 
     public void addTech(Tech tech) {

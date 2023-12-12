@@ -1,15 +1,24 @@
 package com.example.api.Service;
 
-import com.example.api.DTO.ReplyProject;
-import com.example.api.DTO.Request;
+import com.example.api.DTO.ProjectDTO;
+import com.example.api.DTO.RequestDTO;
+import com.example.api.DTO.UpdateProjectDTO;
 import com.example.api.Entity.*;
 import com.example.api.Exception.AppException;
+import com.example.api.Exception.ResponseMessage;
 import com.example.api.Repository.*;
+import com.example.api.Response.ApiResponse;
 import com.example.api.Service.IService.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -26,49 +35,111 @@ public class ProjectServiceImpl implements ProjectService {
     FeedBackRepository feedBackRepository;
 
 
+
+
+
     @Override
-    public Project getProjectById(String id) {
-        return projectRepository.findById(UUID.fromString(id)).orElse(null);
+    public ProjectDTO getProjectById(String id) {
+        Project project = projectRepository.findById(UUID.fromString(id)).orElse(null);
+        ProjectDTO projectDTO = ProjectDTO.MapProjectToProjectDTO(project);
+        return  projectDTO;
     }
 
     @Override
-    public List<Project> getAllProjects() {
-        return projectRepository.findAllProject();
-    }
-
-    @Override
-    public List<Tech> getAlTechName() {
-        return  techRepository.getAlTechName();
-    }
-
-
-    @Override
-    public List<Project> findByProject_UserId(String userId, String status) {
-        return projectRepository.findByProject_UserId(UUID.fromString(userId), status);
-    }
-
-    @Override
-    public List<Project> findByKeyWord(String keyWord) {
-        return projectRepository.findByKeyWord(keyWord);
-    }
-
-    @Override
-    public List<Project> FindByProjectWait(String id) {
-        return projectRepository.findByProjectCensor(UUID.fromString(id));
-    }
-
-    @Override
-    public List<Project> FindByProjectProcessed(String id) {
-        return projectRepository.findByProjectCensorAccess(UUID.fromString(id));
-    }
-
-    @Override
-    public FeedBack FindByFeedBackProjectID(String projectID) {
-        return feedBackRepository.FindByFeedBackProjectID(UUID.fromString(projectID));
+    public List<ProjectDTO> getAllProjects() {
+        List<Project> projects = projectRepository.findAllProject();
+        return projects.stream()
+                .map(ProjectDTO::MapProjectToProjectDTO)
+                .collect(Collectors.toList());
     }
 
 
 
+    @Override
+    public List<ProjectDTO> findByProject_UserId( String status) {
+        String email=null;
+        List<Project> projects = new ArrayList<>();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.getPrincipal() instanceof UserDetails) {
+             email = ((UserDetails) authentication.getPrincipal()).getUsername();
+            System.out.println(email);
+
+        } else {
+            ResponseEntity.status(401).body(new ApiResponse<>("Lỗi", new ResponseMessage("Người dùng chưa được xác thực")));
+        }
+        if(email!=null)
+        {
+           User user= userRepository.findUserByEmail(email).orElse(null);
+            projects= projectRepository.findByProject_UserId(user.getId(), status);
+
+
+        }
+        return projects.stream()
+                .map(ProjectDTO::MapProjectToProjectDTO)
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<ProjectDTO> findByProject() {
+        String email=null;
+        List<Project> projects = new ArrayList<>();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            email = ((UserDetails) authentication.getPrincipal()).getUsername();
+            System.out.println(email);
+
+        } else {
+            ResponseEntity.status(401).body(new ApiResponse<>("Lỗi", new ResponseMessage("Người dùng chưa được xác thực")));
+        }
+        if(email!=null)
+        {
+            User user= userRepository.findUserByEmail(email).orElse(null);
+            projects= projectRepository.findProject(user.getId());
+
+
+        }
+        return projects.stream()
+                .map(ProjectDTO::MapProjectToProjectDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProjectDTO> findByKeyWord(String keyWord) {
+        List<Project> projects = projectRepository.findByKeyWord(keyWord);
+        return projects.stream()
+                .map(ProjectDTO::MapProjectToProjectDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ProjectDTO> FindByProjectCensor() {
+
+        String email=null;
+        List<Project> projects = new ArrayList<>();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            email = ((UserDetails) authentication.getPrincipal()).getUsername();
+            System.out.println(email);
+
+        } else {
+            ResponseEntity.status(401).body(new ApiResponse<>("Lỗi", new ResponseMessage("Người dùng chưa được xác thực")));
+        }
+        if(email!=null)
+        {
+            User user= userRepository.findUserByEmail(email).orElse(null);
+           projects = projectRepository.findByProjectCensor(user.getId());
+        }
+        return projects.stream()
+                .map(ProjectDTO::MapProjectToProjectDTO)
+                .collect(Collectors.toList());
+    }
 
 
     @Override
@@ -83,8 +154,8 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public Project CreateProject(Project project) {
 
-        // Danh sách techs để lưu
-        List<Tech> techsToSave = new ArrayList<>();
+
+        Set<Tech> techsToSave = new HashSet<>();
 
         // Kiểm tra và lưu trữ techs trong bảng tech_project
         for (Tech tech : project.getTechs()) {
@@ -98,12 +169,12 @@ public class ProjectServiceImpl implements ProjectService {
                 techsToSave.add(tech);
             }
         }
-        User usercs = userRepository.findById(project.getUsercs().getId()).orElse(null);
+        User usercs = userRepository.findById(project.getStudent().getId()).orElse(null);
 
-        User userst = userRepository.findById(project.getUserst().getId()).orElse(null);
+        User userst = userRepository.findById(project.getCensor().getId()).orElse(null);
         project.setTechs(techsToSave);
-        project.setUsercs(usercs);
-        project.setUserst(userst);
+        project.setCensor(usercs);
+        project.setStudent(userst);
 
         Project savedProject = projectRepository.save(project);
 
@@ -113,59 +184,60 @@ public class ProjectServiceImpl implements ProjectService {
             description.setProjectds(savedProject);
             descriptionRepository.save(description);
         }
+        return  savedProject;
+    }
 
-        return savedProject;
+
+    @Override
+    public ProjectDTO UpdateProject(UpdateProjectDTO updateProjectDTO)
+    {
+        Project projectResult =null;
+        Project project = projectRepository.findById(updateProjectDTO.getId()).orElse(null);
+        if(project!=null)
+        {
+            project.setTitle(updateProjectDTO.getTitle());
+            Set<Tech> techsToSave = new HashSet<>();
+
+            for (Tech tech : updateProjectDTO.getTechs()) {
+                Tech existingTech = techRepository.findTechByName(tech.getName()).orElse(null);
+                if (existingTech != null) {
+
+                    techsToSave.add(existingTech);
+                } else {
+
+                    techRepository.save(tech);
+                }
+            }
+            project.setTechs(techsToSave);
+            projectResult = projectRepository.save(project);
+        }
+        ProjectDTO projectDTO = ProjectDTO.MapProjectToProjectDTO(project);
+        return projectDTO;
+
+
     }
 
     @Override
-    public Project UpdateProject(ReplyProject replyProject) {
+    public ProjectDTO updateIsPublic(RequestDTO requestDTO) {
+        Project projectResult =null;
+        Project project = projectRepository.findById(requestDTO.getId())
+                .orElseThrow(() -> new AppException("Project not found with ID: " + requestDTO.getId()));
+        project.setIsPublic(requestDTO.isPublic());
 
-        Project existingProject = projectRepository.findById(replyProject.getId()).orElse(null);
-        if(replyProject.getContent() !=null )
-        {
+       projectResult = projectRepository.save(project);
+        ProjectDTO projectDTO = ProjectDTO.MapProjectToProjectDTO(projectResult);
+        return projectDTO;
+    }
 
-
-            if (existingProject != null ) {
-
-                existingProject.setStatus(replyProject.getStatus());
-
-                Project projectResult = projectRepository.save(existingProject);
-
-
-                    // Nếu feedback chưa tồn tại, lưu mới
-                    FeedBack newFeedback = new FeedBack();
-                    newFeedback.setContent(replyProject.getContent());
-                    newFeedback.setProjectfb(projectResult);
-                    existingProject.setFeedback(newFeedback);
-                    feedBackRepository.save(newFeedback);
-                    return projectResult;
-            } else {
-
-                return null;
-            }
-        }
-        else
-        {
-            if (existingProject != null) {
-
-                existingProject.setStatus(replyProject.getStatus());
-                existingProject.getDescription().setApproval_Date(replyProject.getApproval_Date());
-
-                return projectRepository.save(existingProject);
-            } else {
-
-                return null;
-            }
-        }
-        }
     @Override
-    public Project updateIsPublic(Request request) {
-        Project project = projectRepository.findById(request.getId())
-                .orElseThrow(() -> new AppException("Project not found with ID: " + request.getId()));
-        project.setIsPublic(request.isPublic());
-
-
-        return projectRepository.save(project);
+    public Integer CountProject(@Param("date") Date date)
+    {
+        return projectRepository.CountProject(date);
+    }
+    @Override
+    public  List<Project> TopProjectWithView()
+    {
+        return projectRepository.TopProjectWithView();
     }
 
 //    @Override
