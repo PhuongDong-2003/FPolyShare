@@ -111,7 +111,7 @@ public class ProjectController {
 
 
 
-    @PostMapping(value ={"/create"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> CreateProject(@RequestBody Project project) {
 
         Project projectresult = projectServiceImpl.CreateProject(project);
@@ -124,7 +124,7 @@ public class ProjectController {
 
     }
 
-    @PutMapping(value ={"/update"}, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping( consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ApiResponse<?>> UpdateAccessProject(@RequestBody UpdateProjectDTO updateProjectDTO) {
         ProjectDTO projectresult = projectServiceImpl.UpdateProject(updateProjectDTO);
 
